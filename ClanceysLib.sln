@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClanceysLib", "ClanceysLib\ClanceysLib.csproj", "{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhone.Build.0 = Debug|iPhone
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Release|iPhone.ActiveCfg = Release|iPhone
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Release|iPhone.Build.0 = Release|iPhone
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ClanceysLib\ClanceysLib.csproj
+	EndGlobalSection
+EndGlobal
