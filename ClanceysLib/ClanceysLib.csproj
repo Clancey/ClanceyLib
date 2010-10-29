@@ -76,6 +76,7 @@
     <Folder Include="AppStore\" />
     <Folder Include="Data\" />
     <Folder Include="Utils\" />
+    <Folder Include="MapKit\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIControls\ScrollViewWithHeader.cs" />
@@ -85,5 +86,7 @@
     <Compile Include="UIControls\RotatingViewController.cs" />
     <Compile Include="Data\Downloader.cs" />
     <Compile Include="Data\TableViewDataSource.cs" />
+    <Compile Include="MapKit\PolygonOverlay.cs" />
+    <Compile Include="UIControls\StackPanel.cs" />
   </ItemGroup>
 </Project>
