@@ -1,0 +1,29 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" ctype="Workspace" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClanceySamples/Main.cs" ctype="Workbench">
+    <Files>
+      <File FileName="ClanceysLib/Navigation/NavLauncher.cs" Line="48" Column="4" />
+      <File FileName="ClanceysLib/Navigation/NavPage.cs" Line="1" Column="1" />
+      <File FileName="ClanceySamples/Main.cs" Line="39" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="ClanceySamples" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="ClanceysLib" expanded="True">
+            <Node name="Navigation" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/Clancey/Projects/ClanceysLib/ClanceysLib/Navigation/NavPage.cs" line="31" />
+      <Breakpoint file="/Users/Clancey/Projects/ClanceysLib/ClanceysLib/Navigation/NavPage.cs" line="44" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore" />
+</Properties>

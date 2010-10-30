@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClanceysLib", "ClanceysLib\ClanceysLib.csproj", "{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClanceySamples", "ClanceySamples\ClanceySamples.csproj", "{D77636E6-8B20-4B8D-929E-DF9A559FD59F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -11,6 +13,14 @@ Global
 		Release|iPhone = Release|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Debug|iPhone.Build.0 = Debug|iPhone
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Release|iPhone.ActiveCfg = Release|iPhone
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Release|iPhone.Build.0 = Release|iPhone
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{D77636E6-8B20-4B8D-929E-DF9A559FD59F}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhone.Build.0 = Debug|iPhone
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -21,6 +31,6 @@ Global
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ClanceysLib\ClanceysLib.csproj
+		StartupItem = ClanceySamples\ClanceySamples.csproj
 	EndGlobalSection
 EndGlobal

@@ -26,7 +26,6 @@ namespace ClanceysLib
 */
 	public class StackView : UIView
 	{
-		private List<UIView> views = new List<UIView> ();
 		public float padding = 10;
 		public bool StretchWidth { get; set; }
 
@@ -36,48 +35,15 @@ namespace ClanceysLib
 			this.Bounds = rect;
 		}
 
-		public override void WillMoveToSuperview (UIView newsuper)
+		public override void SubviewAdded (UIView uiview)
 		{
-			Redraw ();
-			base.WillMoveToSuperview (newsuper);
+			base.SubviewAdded (uiview);
+			Redraw();
 		}
-
-		public override void WillMoveToWindow (UIWindow window)
+		public override void WillRemoveSubview (UIView uiview)
 		{
-			Redraw ();
-			base.WillMoveToWindow (window);
-		}
-
-		public void Add (UIView view)
-		{
-			views.Add (view);
-			Redraw ();
-		}
-		public void AddRange (IEnumerable<UIView> Views)
-		{
-			views.AddRange (Views);
-			Redraw ();
-		}
-		public void Insert (int Index, UIView view)
-		{
-			views.Insert (Index, view);
-			Redraw ();
-		}
-		public void Remove (UIView view)
-		{
-			views.Remove (view);
-			view.RemoveFromSuperview ();
-			Redraw ();
-		}
-		public void Remove (int Index)
-		{
-			var view = views[Index];
-			if (view != null)
-			{
-				view.RemoveFromSuperview ();
-				views.Remove (view);
-			}
-			Redraw ();
+			base.WillRemoveSubview (uiview);
+			Redraw();
 		}
 
 
@@ -85,7 +51,7 @@ namespace ClanceysLib
 		{
 			float lastY = 0 + padding;
 			
-			foreach (var view in views)
+			foreach (var view in Subviews)
 			{
 				var rect = view.Frame;
 				if (StretchWidth)
@@ -94,8 +60,6 @@ namespace ClanceysLib
 				rect.Y = lastY;
 				
 				view.Frame = rect;
-				if (view.Superview != this)
-					AddSubview (view);
 				lastY += rect.Height + padding;
 				
 			}

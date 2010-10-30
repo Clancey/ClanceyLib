@@ -143,7 +143,7 @@ namespace ClanceysLib
 			public DateTime startDate { get; set; }
 			public DateTime endDate { get; set; }
 			public string Title { get; set; }
-			public string location { get; set; }
+			public string Location { get; set; }
 			internal BlockColumn Column { get; set; }
 			public CalendarDayEventView ()
 			{
@@ -233,9 +233,9 @@ namespace ClanceysLib
 						DrawString (Title, titleRect, UIFont.BoldSystemFontOfSize (FONT_SIZE), UILineBreakMode.TailTruncation, UITextAlignment.Left);
 						
 					}
-					if (!string.IsNullOrEmpty (location))
+					if (!string.IsNullOrEmpty (Location))
 					{
-						DrawString (location, locationRect, UIFont.SystemFontOfSize (FONT_SIZE), UILineBreakMode.TailTruncation, UITextAlignment.Left);
+						DrawString (Location, locationRect, UIFont.SystemFontOfSize (FONT_SIZE), UILineBreakMode.TailTruncation, UITextAlignment.Left);
 						
 						
 					}
@@ -257,9 +257,7 @@ namespace ClanceysLib
 			}
 			
 		}
-
-
-		//public delegate void 
+		
 		public class CalendarDaytimelineView : UIView
 		{
 			//////
@@ -278,7 +276,7 @@ namespace ClanceysLib
 
 			public static float EVENT_VERTICAL_DIFF = 0.0f;
 			public static float EVENT_HORIZONTAL_DIFF = 2.0f;
-			public List<CalendarDayEventView> events;
+			public List<CalendarDayEventView> Events;
 			public DateTime currentDate;
 			private UIScrollView scrollView;
 			private TimeLineView timelineView;
@@ -294,6 +292,7 @@ namespace ClanceysLib
 			public CalendarDaytimelineView (RectangleF rect)
 			{
 				this.Frame = rect;
+				this.BackgroundColor = UIColor.White;
 				setupCustomInitialisation ();
 			}
 			public CalendarDaytimelineView ()
@@ -307,7 +306,7 @@ namespace ClanceysLib
 			public void setupCustomInitialisation ()
 			{
 				// Initialization code
-				events = new List<CalendarDayEventView> ();
+				Events = new List<CalendarDayEventView> ();
 				currentDate = DateTime.Today;
 				// Add main scroll view
 				this.AddSubview (getScrollView ());
@@ -380,6 +379,7 @@ namespace ClanceysLib
 				{
 					if (view is TimeLineView)
 					{
+						view.Frame = Frame;
 					}
 
 					
@@ -391,14 +391,14 @@ namespace ClanceysLib
 				
 				// Ask the delgate about the events that correspond
 				// the the currently displayed day view
-				if (events != null)
+				if (Events != null)
 				{
 					
-					events = events.OrderBy (x => x.startDate).ThenByDescending (x => x.endDate).ToList ();
+					Events = Events.OrderBy (x => x.startDate).ThenByDescending (x => x.endDate).ToList ();
 					
 					List<Block> blocks = new List<Block> ();
 					Block lastBlock = new Block ();
-					foreach (CalendarDayEventView e in events)
+					foreach (CalendarDayEventView e in Events)
 					{
 						// if there is no block, create the first one
 						if (blocks.Count == 0)
@@ -412,7 +412,7 @@ namespace ClanceysLib
 						else if (!lastBlock.OverlapsWith (e))
 						{
 							lastBlock = new Block ();
-							blocks.Add (new Block ());
+							blocks.Add (lastBlock);
 						}
 						
 						// any case, add it to some block

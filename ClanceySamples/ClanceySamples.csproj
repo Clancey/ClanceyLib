@@ -5,14 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}</ProjectGuid>
+    <ProjectGuid>{1CAB7615-CC07-4808-84CA-4A16A497660C}</ProjectGuid>
     <ProjectTypeGuids>{E613F3A2-FE9C-494F-B74E-F63BCB86FEA6};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
-    <RootNamespace>ClanceysLib</RootNamespace>
-    <AssemblyName>ClanceysLib</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ClanceySamples</RootNamespace>
+    <MainNibFile>MainWindow.xib</MainNibFile>
+    <AssemblyName>ClanceySamples</AssemblyName>
     <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <BundleDisplayName>ClanceySamples</BundleDisplayName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +27,7 @@
     <MtouchDebug>True</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -64,40 +67,44 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainWindow.xib.designer.cs">
+      <DependentUpon>MainWindow.xib</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="Images\Images.cs" />
+    <Compile Include="TestView.cs" />
+    <Compile Include="CalendarView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainWindow.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClanceysLib\ClanceysLib.csproj">
+      <Project>{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}</Project>
+      <Name>ClanceysLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Favorites.png" />
+    <Content Include="Images\Contacts.png" />
+    <Content Include="Images\Organize.png" />
+    <Content Include="Images\Featured.png" />
+    <Content Include="Images\History.png" />
+    <Content Include="Images\More.png" />
+    <Content Include="Images\Recent.png" />
+    <Content Include="Images\Most.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties InternalTargetFrameworkVersion="IPhone" />
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <Folder Include="UIControls\" />
-    <Folder Include="Utils\" />
-    <Folder Include="AppStore\" />
-    <Folder Include="Data\" />
-    <Folder Include="Utils\" />
-    <Folder Include="MapKit\" />
-    <Folder Include="Navigation\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="UIControls\ScrollViewWithHeader.cs" />
-    <Compile Include="AppStore\InAppPurchaseManager.cs" />
-    <Compile Include="Utils\Graphics.cs" />
-    <Compile Include="UIControls\DayCalendar.cs" />
-    <Compile Include="UIControls\RotatingViewController.cs" />
-    <Compile Include="Data\Downloader.cs" />
-    <Compile Include="Data\TableViewDataSource.cs" />
-    <Compile Include="MapKit\PolygonOverlay.cs" />
-    <Compile Include="UIControls\StackPanel.cs" />
-    <Compile Include="Navigation\NavLauncher.cs" />
-    <Compile Include="Navigation\NavPage.cs" />
-    <Compile Include="Navigation\NavIcon.cs" />
-    <Compile Include="UIControls\TapableView.cs" />
-    <Compile Include="Navigation\NavModal.cs" />
-    <Compile Include="Navigation\ObjectFactory.cs" />
-    <Compile Include="Navigation\testView.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Images\Home.png" />
-  </ItemGroup>
 </Project>
