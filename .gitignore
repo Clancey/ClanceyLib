@@ -5,6 +5,7 @@ Thumbs.db
 *.obj
 *.pdb
 *.user
+*.userprefs
 *.aps
 *.pch
 *.vspscc
@@ -18,6 +19,7 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
+*.pidb
 .svn
 [Bb]in
 [Dd]ebug*/

@@ -28,6 +28,7 @@ namespace ClanceysLib
 	{
 		public float padding = 10;
 		public bool StretchWidth { get; set; }
+		public UIScrollView ParentScrollView {get;set;}
 
 		public StackView (RectangleF rect)
 		{
@@ -50,6 +51,7 @@ namespace ClanceysLib
 		public void Redraw ()
 		{
 			float lastY = 0 + padding;
+			float maxWidth = 0;
 			
 			foreach (var view in Subviews)
 			{
@@ -60,9 +62,12 @@ namespace ClanceysLib
 				rect.Y = lastY;
 				
 				view.Frame = rect;
+				if(maxWidth < rect.Width)
+					maxWidth = rect.Width;
 				lastY += rect.Height + padding;
-				
 			}
+			if(ParentScrollView != null)
+				ParentScrollView.ContentSize = new SizeF(maxWidth,lastY);
 		}
 	}
 }
