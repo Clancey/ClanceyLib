@@ -20,20 +20,14 @@ namespace ClanceysLib
 		/// <summary>
 		/// Button Image
 		/// </summary>
+		
 		public UIImage Image 
 		{
 			get{return _image;}
 			set{_image = RoundImage ? Graphics.RemoveSharpEdges(value) : value;}
 		}
-		/// <summary>
-		/// The FullName of the View With the Assembly seperated by a ,
-		/// ex: "ClanceysLib.NavIcon,ClanceysLib"
-		/// </summary>
-		public string ModalName{get;set;}
-		/// <summary>
-		/// Object Array to be passed into the constructor
-		/// </summary>
-		public object[] ModalParameters {get;set;}
+		public UIView theView {get;set;}
+		public Func<UIResponder> ModalView{get;set;}
 		public string Title {get;set;}
 		public int NotificationCount {get;set;}
 		public NavPage parent;
@@ -58,7 +52,8 @@ namespace ClanceysLib
 			button.Frame = new RectangleF(x,0,Size.Width,Size.Width);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
-				parent.parent.LaunchModal(ModalName,ModalParameters);
+				parent.parent.LaunchModal(ModalView());
+				
 			};
 			//button.SetImage(Graphics.AdjustImage(button.Frame, Image,CGBlendMode.Normal,UIColor.Blue),UIControlState.Highlighted);
 			

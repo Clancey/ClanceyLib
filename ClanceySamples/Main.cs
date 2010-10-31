@@ -6,6 +6,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using ClanceysLib;
 using System.Drawing;
+using SQLite;
 
 namespace ClanceySamples
 {
@@ -27,6 +28,7 @@ namespace ClanceySamples
 		{
 			// If you have defined a view, add it here:
 			// window.AddSubview (navigationController.View);
+		
 			var launcher = new NavLauncher();
 			launcher.Pages = new List<NavPage>(){
 				new NavPage()
@@ -36,8 +38,8 @@ namespace ClanceySamples
 						{
 							Image = Images.Contacts,
 							Title = "Test Label",
-							ModalName = "ClanceySamples.TestView,ClanceySamples",
-							ModalParameters = new object[]{new RectangleF(100,100,100,100),"Label Text"},
+							ModalView = delegate() { 
+								return new TestView(new RectangleF(100,100,100,100),"Label Text"); },
 						},
 						new NavIcon()
 						{
@@ -53,7 +55,7 @@ namespace ClanceySamples
 						{
 							Image = Images.History,
 							Title = "Calendar",
-							ModalName = "ClanceySamples.CalendarView,ClanceySamples",
+							ModalView = delegate() {return new CalendarView();}
 						},
 					}
 				},

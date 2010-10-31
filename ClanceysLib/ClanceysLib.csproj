@@ -93,9 +93,8 @@
     <Compile Include="Navigation\NavPage.cs" />
     <Compile Include="Navigation\NavIcon.cs" />
     <Compile Include="UIControls\TapableView.cs" />
-    <Compile Include="Navigation\NavModal.cs" />
-    <Compile Include="Navigation\ObjectFactory.cs" />
     <Compile Include="Navigation\testView.cs" />
+    <Compile Include="Utils\ObjectFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />

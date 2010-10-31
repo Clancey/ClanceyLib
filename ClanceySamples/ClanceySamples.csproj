@@ -78,6 +78,8 @@
     <Compile Include="Images\Images.cs" />
     <Compile Include="TestView.cs" />
     <Compile Include="CalendarView.cs" />
+    <Compile Include="SQLite.cs" />
+    <Compile Include="Database.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />
