@@ -6,7 +6,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using ClanceysLib;
 using System.Drawing;
-using SQLite;
+using MonoTouch.Dialog;
 
 namespace ClanceySamples
 {
@@ -28,8 +28,7 @@ namespace ClanceySamples
 		{
 			// If you have defined a view, add it here:
 			// window.AddSubview (navigationController.View);
-		
-			var launcher = new NavLauncher();
+			var launcher = new NavLauncher ();
 			launcher.Pages = new List<NavPage>(){
 				new NavPage()
 				{
@@ -44,12 +43,11 @@ namespace ClanceySamples
 						new NavIcon()
 						{
 							Image = Images.Favorites,
-							Title = "Favorites"
-						},
-						new NavIcon()
-						{
-							Image = Images.Featured,
-							Title = "Featured"
+							Title = "Stack Panel",
+							ModalView = delegate() 
+							{
+								return new 	StackPanelView(this.window.Frame );
+							}
 						},
 						new NavIcon()
 						{
@@ -65,7 +63,11 @@ namespace ClanceySamples
 						new NavIcon()
 						{
 							Image = Images.Most,
-							Title = "Most"
+							Title = "MT.D",
+							ModalView = delegate()
+							{
+								return new DialogViewController(DemoElementApi());	
+							}
 						},
 						new NavIcon()
 						{
@@ -81,11 +83,10 @@ namespace ClanceySamples
 					
 				}
 				
-			};
-			
-			navigationController = new UINavigationController();
-			navigationController.PushViewController(launcher,false);
-			window.AddSubview(navigationController.View);
+			};			
+			navigationController = new UINavigationController ();
+			navigationController.PushViewController (launcher, false);
+			window.AddSubview (navigationController.View);
 			window.MakeKeyAndVisible ();
 			
 			return true;

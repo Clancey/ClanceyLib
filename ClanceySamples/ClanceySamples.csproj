@@ -66,6 +66,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="MonoTouch.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MonoTouch.Dialog.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -80,6 +84,8 @@
     <Compile Include="CalendarView.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="StackPanelView.cs" />
+    <Compile Include="DemoElementApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />

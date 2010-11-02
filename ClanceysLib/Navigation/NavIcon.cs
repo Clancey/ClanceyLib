@@ -26,7 +26,6 @@ namespace ClanceysLib
 			get{return _image;}
 			set{_image = RoundImage ? Graphics.RemoveSharpEdges(value) : value;}
 		}
-		public UIView theView {get;set;}
 		public Func<UIResponder> ModalView{get;set;}
 		public string Title {get;set;}
 		public int NotificationCount {get;set;}
@@ -52,7 +51,7 @@ namespace ClanceysLib
 			button.Frame = new RectangleF(x,0,Size.Width,Size.Width);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
-				parent.parent.LaunchModal(ModalView());
+				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
 				
 			};
 			//button.SetImage(Graphics.AdjustImage(button.Frame, Image,CGBlendMode.Normal,UIColor.Blue),UIControlState.Highlighted);

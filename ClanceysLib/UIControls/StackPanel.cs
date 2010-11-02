@@ -24,18 +24,23 @@ namespace ClanceysLib
 
 		window.AddSubview (panel);
 */
-	public class StackView : UIView
+	public class StackPanel : UIView
 	{
 		public float padding = 10;
 		public bool StretchWidth { get; set; }
 		public UIScrollView ParentScrollView {get;set;}
 
-		public StackView (RectangleF rect)
+		public StackPanel (RectangleF rect)
 		{
 			this.Frame = rect;
 			this.Bounds = rect;
 		}
-
+		
+		public StackPanel (IntPtr handle) : base(handle)
+		{
+		
+		}
+		
 		public override void SubviewAdded (UIView uiview)
 		{
 			base.SubviewAdded (uiview);
