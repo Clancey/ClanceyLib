@@ -65,7 +65,6 @@ namespace ClanceysLib
 				}
 			}
 
-
 			internal bool OverlapsWith (CalendarDayEventView e)
 			{
 				if (events.Count == 0)
@@ -176,8 +175,6 @@ namespace ClanceysLib
 						DateTime hourPlus = endDate.AddHours (1);
 						return new DateTime (hourPlus.Year, hourPlus.Month, hourPlus.Day, hourPlus.Hour, 0, 0);
 					}
-
-
 					else if (endDate.Minute > 0)
 					{
 						return new DateTime (endDate.Year, endDate.Month, endDate.Day, endDate.Hour, 30, 0);
@@ -237,10 +234,8 @@ namespace ClanceysLib
 					{
 						DrawString (Location, locationRect, UIFont.SystemFontOfSize (FONT_SIZE), UILineBreakMode.TailTruncation, UITextAlignment.Left);
 						
-						
 					}
 				}
-
 				
 				else
 				{
@@ -257,7 +252,7 @@ namespace ClanceysLib
 			}
 			
 		}
-		
+
 		public class CalendarDaytimelineView : UIView
 		{
 			//////
@@ -383,6 +378,7 @@ namespace ClanceysLib
 					}
 
 					
+					
 					else
 					{
 						view.RemoveFromSuperview ();
@@ -407,6 +403,7 @@ namespace ClanceysLib
 							blocks.Add (lastBlock);
 						}
 						// or if the event doesn't overlap with the last block, create a new block
+
 
 
 						else if (!lastBlock.OverlapsWith (e))
@@ -466,6 +463,7 @@ namespace ClanceysLib
 									eventHeight = (VERTICAL_DIFF / 2) - (2 * EVENT_VERTICAL_DIFF);
 								}
 
+								
 								
 								else
 								{
