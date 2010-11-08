@@ -21,6 +21,8 @@ namespace ClanceysLib
 		private UIPageControl pageControl;
 		private float pageControlH = 30;
 		private UIResponder topModal;
+		public UIBarButtonItem LeftButton;
+		public UIBarButtonItem RightButton;
 
 
 		public NavLauncher () : base()
@@ -127,6 +129,9 @@ namespace ClanceysLib
 			RectangleF scrollFrame = scrollView.Frame;
 			scrollFrame.Width = scrollFrame.Width * Pages.Count;
 			scrollView.ContentSize = scrollFrame.Size;
+			
+			NavigationItem.LeftBarButtonItem = LeftButton;
+			NavigationItem.RightBarButtonItem = RightButton;
 			
 			
 			foreach (var page in Pages)

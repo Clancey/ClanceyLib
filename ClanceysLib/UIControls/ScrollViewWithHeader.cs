@@ -18,11 +18,16 @@ namespace ClanceysLib
         private RectangleF _rHeaderFrame;
         private UIScrollView _rowHeader;
         private UIView _rowHeaderContent;
+		public PointF ContentOffset = new PointF(0,0);
+		public EventHandler Scrolled{get;set;}
+		public SizeF ContentSize{get;private set;}
+		public float ZoomScale {get;private set;}
+		public NSAction Zoomed {get;set;}
+		
 
         private bool isZooming;
 		public ScrollViewWithHeader(IntPtr handle):base(handle)
 		{
-			
             SetupController(new RectangleF(0,0,0,0), null, null, null, false);
 		}
 
@@ -49,6 +54,11 @@ namespace ClanceysLib
         {
             _mainContent.ScrollRectToVisible(visibleRect, animate);
         }
+		
+		public void SetZoomScale(float zoomScale, bool animate)
+		{
+			_mainContent.SetZoomScale(zoomScale, animate);
+		}
 
         public void SetupController(RectangleF rect, UIView header, UIView rowHeader, UIView content, bool enableZoom)
         {
@@ -122,6 +132,8 @@ namespace ClanceysLib
             _mainContent.ContentSize = cSize;
             _mainContent.AddSubview(content);
             _mainContent.Bounces = false;
+			ContentSize = cRect.Size;
+			ZoomScale = _mainContent.ZoomScale;
             if (enableZoom)
             {
                 _mainContent.MaximumZoomScale = maxZoom;
@@ -135,13 +147,16 @@ namespace ClanceysLib
                                                             //Tell the class you are zooming
                                                             isZooming = true;
                                                             ZoomHeader();
+															ZoomScale = _mainContent.ZoomScale;
                                                         };
                 _mainContentDelegate.ZoomEnded += delegate
                                                       {
                                                           ZoomHeader();
                                                           isZooming = false;
                                                           // Rescroll the content to make sure it lines up with the header
-
+															ZoomScale = _mainContent.ZoomScale;
+															if(Zoomed != null)
+																Zoomed();
                                                           //scrollContent();
                                                       };
             }
@@ -153,6 +168,9 @@ namespace ClanceysLib
                                                       //Rescroll the content to make sure it lines up with the header
                                                       if (!_mainContent.Zooming && !isZooming)
                                                           scrollContent();
+														this.ContentOffset =  _mainContent.ContentOffset;
+														if(this.Scrolled != null)
+															Scrolled(this,null);
                                                   };
             _mainContent.Delegate = _mainContentDelegate;
 
@@ -258,7 +276,7 @@ namespace ClanceysLib
                 mainFrame.Width = headerFrame.Width;
                 mainFrame.X = rHeaderFrame.Width;
                 mainFrame.Y = headerFrame.Height;
-
+				ContentSize = mainFrame.Size;
                 _mainContent.Frame = mainFrame;
                 scrollHeader();
             }
