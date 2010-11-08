@@ -205,11 +205,23 @@ namespace ClanceysLib
 	public static class SKProductExtender
 	{
 		public static string LocalizedPrice( this SKProduct product)
-		{
-			// set the current culture
-			Thread.CurrentThread.CurrentCulture=new System.Globalization.CultureInfo(product.PriceLocale.LocaleIdentifier.Replace("_","-"));
-			return ((double)product.Price).ToString("C2");			
-		}
+	    {
+	        Console.WriteLine("product.PriceLocale.LocaleIdentifier="+product.PriceLocale.LocaleIdentifier);
+	        // returns en_AU@currency=AUD for me
+	        string localeIdString = product.PriceLocale.LocaleIdentifier;
+	        string locale = localeIdString; // default
+	        string currency = "USD";
+	        if (localeIdString.IndexOf('@') > 0)
+	        {
+	            locale = localeIdString.Substring(0, localeIdString.IndexOf('@'));
+	            currency = localeIdString.Substring(localeIdString.IndexOf('=')+1,3);
+	        }
+	        Console.WriteLine("locale " + locale);
+	        Console.WriteLine("currency " + currency);
+	
+	        Thread.CurrentThread.CurrentCulture=new System.Globalization.CultureInfo(locale.Replace("_","-"));
+	        return ((double)product.Price.FloatValue).ToString("C2");           
+	    }
 	}
 }
 
