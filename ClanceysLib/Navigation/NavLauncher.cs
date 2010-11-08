@@ -42,6 +42,7 @@ namespace ClanceysLib
 			this.View.AddSubview (MainView);
 			MainView.AddSubview (scrollView);
 			MainView.AddSubview (pageControl);
+			scrollView.BackgroundColor = UIColor.Gray;
 		}
 
 		public override void ViewWillAppear (bool animated)

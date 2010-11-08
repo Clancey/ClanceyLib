@@ -32,9 +32,9 @@ namespace ClanceysLib
 			float currentW = 0;	
 			foreach(var icon in Icons)
 			{
-				var x =  (columnWidth - icon.Frame.Width ) /2;
-				var y = (rowsHeight - icon.Frame.Height ) /2;
-				if(currentW + x >  Frame.Width)
+				var x =  Padding;// - icon.Frame.Width ) /2;
+				var y = Padding;// - icon.Frame.Height ) /2;
+				if(currentW + x + columnWidth >  Frame.Width)
 				{
 					currentW = 0;
 					currentH += rowsHeight + Padding;
@@ -43,6 +43,8 @@ namespace ClanceysLib
 				y += currentH ;
 				Console.WriteLine(x + " : " + y);
 				icon.parent = this;
+				icon.ColumnWidth = columnWidth;
+				icon.RowHeight = rowsHeight;
 				icon.Refresh(new PointF( x, y));
 				if(icon.Superview != this)
 					this.AddSubview(icon);
