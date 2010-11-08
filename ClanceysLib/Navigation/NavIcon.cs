@@ -18,7 +18,7 @@ namespace ClanceysLib
 		/// Auto Resize and round off the image corners.
 		/// </summary>
 		public bool RoundImage = false;
-		public bool KeepImageAspectRation = false;
+		public bool KeepImageAspectRation = true;
 		public float ColumnWidth{get;set;}
 		public float RowHeight {get;set;}
 		public UIImage Image {get;set;}
@@ -52,12 +52,12 @@ namespace ClanceysLib
 			
 			var x = (frame.Width - image.Size.Width) /2;
 			button = UIButton.FromType(UIButtonType.Custom);
-			Console.WriteLine("imageH :" + imageH);
-			Console.WriteLine("imageSize : " + image.Size);
-			Console.WriteLine("row : " + RowHeight);
-			var y = RowHeight - image.Size.Height;
-			Console.WriteLine("y:" + y);
-			button.Frame = new RectangleF(x,0,image.Size.Width,image.Size.Width);
+			//Console.WriteLine("imageH :" + imageH);
+			//Console.WriteLine("imageSize : " + image.Size);
+			//Console.WriteLine("row : " + RowHeight);
+			var y = imageH - image.Size.Height;
+			//Console.WriteLine("y:" + y);
+			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
