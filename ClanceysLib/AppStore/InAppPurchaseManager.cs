@@ -27,7 +27,7 @@ namespace ClanceysLib
 		
 		public void requestProUpgradeProductData()
 		{
-		 	NSSet productIdentifiers  = NSSet.MakeNSObjectSet<NSString>(new NSString[]{new NSString("com.runmonster.runmonsterfree.upgradetopro")});
+		 	NSSet productIdentifiers  = NSSet.MakeNSObjectSet<NSString>(new NSString[]{new NSString(InAppPurchaseProUpgradeProductId)});
 		    productsRequest  = new SKProductsRequest(productIdentifiers);
 			productsRequest.Delegate = this;
 			productsRequest.Start();
