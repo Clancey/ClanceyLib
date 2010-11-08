@@ -39,6 +39,24 @@ namespace ClanceysLib
 			}
 		}
 	
+		public static UIImage ResizeImage (SizeF size,UIImage image,bool KeepRatio)
+		{
+			var curSize = image.Size;
+			SizeF newSize;
+			if(KeepRatio)
+			{
+				var ratio = Math.Min( size.Width/curSize.Width, size.Height/curSize.Height);
+				newSize = new SizeF(curSize.Width * ratio, curSize.Height * ratio);
+			}
+			else
+			{
+				newSize = size;	
+			}
+			
+			return image.Scale(newSize);
+
+			
+		}
 		
 		// Check for multi-tasking as a way to determine if we can probe for the "Scale" property,
 		// only available on iOS4 
@@ -50,19 +68,13 @@ namespace ClanceysLib
 			if (image == null)
 				throw new ArgumentNullException ("image");
 			
-			float size = HighRes ? 73 : 48;
 			
-			UIGraphics.BeginImageContext (new SizeF (size, size));
+			UIGraphics.BeginImageContext (image.Size);
 			var c = UIGraphics.GetCurrentContext ();
 			
-			if (HighRes)
-				c.AddPath (largePath);
-			else 
-				c.AddPath (smallPath);
+			c.AddPath (MakeRoundedPath(image.Size.Height));
 			
-			c.Clip ();
-			
-			image.Draw (new RectangleF (0, 0, size, size));
+			image.Draw (new RectangleF (PointF.Empty,image.Size));
 			var converted = UIGraphics.GetImageFromCurrentImageContext ();
 			UIGraphics.EndImageContext ();
 			return converted;

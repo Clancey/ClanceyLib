@@ -10,22 +10,18 @@ namespace ClanceysLib
 	
 	public class NavIcon :UIView
 	{
-		private SizeF Size  = new SizeF(58,85);
-		private SizeF lblSize = new SizeF(58,20); 
-		private UIImage _image;
+		//private SizeF Size  = new SizeF(58,85);
+		//private SizeF lblSize = new SizeF(58,20); 
+		private float padding = 5f;
+		private float TextFontSize =11f;
 		/// <summary>
 		/// Auto Resize and round off the image corners.
 		/// </summary>
-		public bool RoundImage = true;
-		/// <summary>
-		/// Button Image
-		/// </summary>
-		
-		public UIImage Image 
-		{
-			get{return _image;}
-			set{_image = RoundImage ? Graphics.RemoveSharpEdges(value) : value;}
-		}
+		public bool RoundImage = false;
+		public bool KeepImageAspectRation = false;
+		public float ColumnWidth{get;set;}
+		public float RowHeight {get;set;}
+		public UIImage Image {get;set;}
 		public Func<UIResponder> ModalView{get;set;}
 		public string Title {get;set;}
 		public int NotificationCount {get;set;}
@@ -35,7 +31,7 @@ namespace ClanceysLib
 		
 		public NavIcon ()
 		{
-			this.Frame = new RectangleF(new Point(0,0),Size);
+			this.Frame = new RectangleF(0,0,0,0);
 			
 		}
 		
@@ -44,11 +40,24 @@ namespace ClanceysLib
 		{
 			var frame = this.Frame;
 			frame.Location = location;
+			frame.Height = RowHeight;
+			frame.Width = ColumnWidth;
 			this.Frame = frame;
 			
-			var x = (frame.Width - Image.Size.Width) /2;
+			var imageH = RowHeight - padding - (TextFontSize + 5);
+			var image = Graphics.ResizeImage(new SizeF(ColumnWidth,imageH),Image,KeepImageAspectRation);
+			//var image = Image;
+			if(RoundImage)
+				image = Graphics.RemoveSharpEdges(image);
+			
+			var x = (frame.Width - image.Size.Width) /2;
 			button = UIButton.FromType(UIButtonType.Custom);
-			button.Frame = new RectangleF(x,0,Size.Width,Size.Width);
+			Console.WriteLine("imageH :" + imageH);
+			Console.WriteLine("imageSize : " + image.Size);
+			Console.WriteLine("row : " + RowHeight);
+			var y = RowHeight - image.Size.Height;
+			Console.WriteLine("y:" + y);
+			button.Frame = new RectangleF(x,0,image.Size.Width,image.Size.Width);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
@@ -58,10 +67,10 @@ namespace ClanceysLib
 			
 			
 			this.AddSubview(button);
-			var lblLoc = new PointF(0,Image.Size.Height + 5);
-			label = new UILabel(new RectangleF(lblLoc,lblSize));
+			var lblLoc = new PointF(0,image.Size.Height + 5);
+			label = new UILabel(new RectangleF(lblLoc,new SizeF(ColumnWidth,TextFontSize)));
 			label.Text = Title;
-			label.Font = UIFont.FromName("Arial",11);
+			label.Font = UIFont.FromName("Arial",TextFontSize);
 			label.TextAlignment = UITextAlignment.Center;
 			this.AddSubview(label);
 		}
