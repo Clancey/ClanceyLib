@@ -30,7 +30,7 @@ namespace ClanceySamples
 			// window.AddSubview (navigationController.View);
 			var launcher = new NavLauncher ();
 			launcher.Pages = new List<NavPage>(){
-				new NavPage()
+				new NavPage(3,3)
 				{
 					Icons = new List<NavIcon>{
 						new NavIcon()
@@ -55,11 +55,15 @@ namespace ClanceySamples
 							Title = "Calendar",
 							ModalView = delegate() {return new CalendarView();}
 						},
-					}
-				},
-				new NavPage()
-				{
-					Icons = new List<NavIcon>{
+						new NavIcon()
+						{
+							Image = Images.More,
+							Title = "Grid Layout",
+							ModalView = delegate()
+							{
+								return new GridView(new RectangleF(100,100,100,100));	
+							}
+						},	
 						new NavIcon()
 						{
 							Image = Images.Most,
@@ -69,15 +73,16 @@ namespace ClanceySamples
 								return new DialogViewController(DemoElementApi());	
 							}
 						},
-						new NavIcon()
-						{
-							Image = Images.Organize,
-							Title = "Organize"
-						},
+					}
+				},
+				new NavPage(3,3)
+				{
+					Icons = new List<NavIcon>{
+					
 						new NavIcon()
 						{
 							Image = Images.Recent,
-							Title = "Recent"
+							Title = "nothing"
 						},
 					}
 					

@@ -4,114 +4,115 @@ using MonoTouch.Foundation;
 using MonoTouch;
 namespace ClanceysLib
 {
-[Register("RotatingViewController")]
-	public partial class RotatingViewController : UIViewController
-	{
-		public UIViewController LandscapeLeftViewController {get;set;}
-		public UIViewController LandscapeRightViewController {get;set;}
-		public UIViewController PortraitViewController {get;set;}
 
-		private NSObject notificationObserver;
+    [Register("RotatingViewController")]
+    public abstract partial class RotatingViewController : UIViewController
+    {
+        public NSObject notificationObserver;
 
-		public RotatingViewController (IntPtr handle) : base(handle)
-		{
-		
+        public RotatingViewController(IntPtr handle) : base(handle)
+        {
+			initialize();
+        }
+
+        [Export("initWithCoder:")]
+        public RotatingViewController(NSCoder coder) : base(coder)
+        {
+			initialize();
+        }
+
+        public RotatingViewController(string nibName, NSBundle bundle) : base(nibName, bundle)
+        {
+			initialize();
+        }
+
+        public RotatingViewController() : base()
+        {
+			initialize();
+        }
+		private void initialize()
+		{	
 		}
 
-		[Export("initWithCoder:")]
-		public RotatingViewController (NSCoder coder) : base(coder)
-		{
-		}
+        public UIViewController LandscapeLeftViewController { get; set; }
+        public UIViewController LandscapeRightViewController { get; set; }
+        public UIViewController PortraitViewController { get; set; }
+        public UIView PortraitView { get; set; }
+        public UIView LandscapeLeftView { get; set; }
+        public UIView LandscapeRightView { get; set; }
+        public bool viewControllerVisible { get; set; }
 
-		public RotatingViewController (string nibName, NSBundle bundle) : base(nibName, bundle)
-		{
-		}
+        public override void ViewDidLoad()
+        {
+          //  SetView();
+        }
 
-		public RotatingViewController () {}
+        public override void ViewWillAppear(bool animated)
+        {
+			viewControllerVisible = true;
+            SetView();
+        }
 
-		public override void ViewWillAppear (bool animated)
-		{
-			SetView();
-		}
-		private void _showView(UIView view){
-			/*
-			if (this.NavigationController!=null)
-				NavigationController.SetNavigationBarHidden(view!=PortraitViewController.View, false);
-			 */
-			_removeAllViews();
-			view.Frame = this.View.Frame;
-			View.AddSubview(view);
+        private void _showView(UIView view)
+        {
+            _removeAllViews();
+            view.Frame = View.Frame;
+            View.AddSubview(view);
+        }
 
-		}
+        public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
+        {
+            if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft)
+                return true;
+            else if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
+                return true;
+            else if (toInterfaceOrientation == UIInterfaceOrientation.Portrait)
+                return true;
+            return false;
+        }
 
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			return true;
-		}
+        public abstract void SetupNavBar();
 
+        private void SetView()
+        {
+            Console.WriteLine(InterfaceOrientation);
+            switch (InterfaceOrientation)
+            {
+                case UIInterfaceOrientation.Portrait:
+                    _showView(PortraitView);
+                    break;
 
-		public override void ViewDidLoad()
-		{
-			
-		}
-		
-		public virtual void SetupNavBar()
-		{
-			//Add you nav bars here
-		}
-		
-
-		public override void ViewDidAppear (bool animated)
-		{
-			UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
-		}
-
-		public override void ViewWillDisappear (bool animated)
-		{
-			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications();
-		}
-
-		private void SetView()
-		{
-			switch (UIDevice.CurrentDevice.Orientation){
-
-				case  UIDeviceOrientation.Portrait:
-					_showView(PortraitViewController.View);
-					break;
-
-				case UIDeviceOrientation.LandscapeLeft:
-					_showView(LandscapeLeftViewController.View);
-
-					break;
-				case UIDeviceOrientation.LandscapeRight:
-					_showView(LandscapeRightViewController.View);
-					break;
-			}
-			SetupNavBar();
-		}
-			
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			Console.WriteLine("rotated! "+UIDevice.CurrentDevice.Orientation);
-			SetView();
-		}
+                case UIInterfaceOrientation.LandscapeLeft:
+                    _showView(LandscapeLeftView);
+                    break;
+                case UIInterfaceOrientation.LandscapeRight:
+                    _showView(LandscapeRightView);
+                    break;
+            }
+            SetupNavBar();
+        }
 		
 
-		private void _removeAllViews(){
-			PortraitViewController.View.RemoveFromSuperview();
-			LandscapeLeftViewController.View.RemoveFromSuperview();
-			LandscapeRightViewController.View.RemoveFromSuperview();
-		}
-		protected void OnDeviceRotated(){
 
-		}
+        public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
+        {
+            	SetView();
+        }
+		
 
 
-		public override void ViewDidDisappear (bool animated)
-		{
-			base.ViewWillDisappear (animated);
-		}
+        private void _removeAllViews()
+        {
+            PortraitView.RemoveFromSuperview();
+            LandscapeLeftView.RemoveFromSuperview();
+            LandscapeRightView.RemoveFromSuperview();
+        }
 
-	}
+        public override void ViewDidDisappear(bool animated)
+        {
+			viewControllerVisible = false;
+            base.ViewWillDisappear(animated);
+        }
+    }
 }
 

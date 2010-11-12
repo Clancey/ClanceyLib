@@ -78,6 +78,7 @@
     <Folder Include="Utils\" />
     <Folder Include="MapKit\" />
     <Folder Include="Navigation\" />
+    <Folder Include="Layout\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIControls\ScrollViewWithHeader.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="Navigation\NavIcon.cs" />
     <Compile Include="UIControls\TapableView.cs" />
     <Compile Include="Utils\ObjectFactory.cs" />
+    <Compile Include="Layout\UIGrid.cs" />
+    <Compile Include="Layout\LayoutAttributeAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />

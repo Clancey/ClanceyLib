@@ -21,6 +21,8 @@ namespace ClanceysLib
 		private UIPageControl pageControl;
 		private float pageControlH = 30;
 		private UIResponder topModal;
+		public UIBarButtonItem LeftButton;
+		public UIBarButtonItem RightButton;
 
 
 		public NavLauncher () : base()
@@ -29,18 +31,21 @@ namespace ClanceysLib
 			// Navbar 
 			mainFrame.Height -= 44;
 			MainView = new UIView (mainFrame);
-			var scrollRect = MainView.Bounds;
+			var scrollRect = MainView.Frame;
 			scrollRect.Height -= pageControlH;
 			scrollView = new UIScrollView (scrollRect);
 			scrollView.ShowsHorizontalScrollIndicator = false;
 			scrollView.ShowsVerticalScrollIndicator = false;
+			scrollView.Scrolled += ScrollViewScrolled;
+			scrollView.PagingEnabled = true;
 			var pageRect = new RectangleF (0, scrollRect.Height, scrollRect.Width, pageControlH);
 			pageControl = new UIPageControl (pageRect);
-			pageControl.BackgroundColor = UIColor.Black;
+			pageControl.BackgroundColor = UIColor.Black;			
+			pageControl.TouchUpInside += HandlePageControlTouchUpInside;
 			this.View.AddSubview (MainView);
 			MainView.AddSubview (scrollView);
 			MainView.AddSubview (pageControl);
-			scrollView.BackgroundColor = UIColor.Gray;
+			//scrollView.BackgroundColor = UIColor.Gray;
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -120,14 +125,14 @@ namespace ClanceysLib
 
 		private void CreatePanels ()
 		{
-			scrollView.Scrolled += ScrollViewScrolled;
-			scrollView.PagingEnabled = true;
-			pageControl.TouchUpInside += HandlePageControlTouchUpInside;
-			
+			ClearScrollView();
 			int count = 0;
 			RectangleF scrollFrame = scrollView.Frame;
 			scrollFrame.Width = scrollFrame.Width * Pages.Count;
 			scrollView.ContentSize = scrollFrame.Size;
+			
+			NavigationItem.LeftBarButtonItem = LeftButton;
+			NavigationItem.RightBarButtonItem = RightButton;
 			
 			
 			foreach (var page in Pages)
@@ -152,6 +157,13 @@ namespace ClanceysLib
 			
 			pageControl.Pages = count;
 		}
+		private void ClearScrollView()
+		{
+			foreach(var view in scrollView.Subviews)
+			{
+				view.RemoveFromSuperview();	
+			}
+		}
 		
 		private void ScrollViewScrolled (object sender, EventArgs e)
 		{
@@ -166,7 +178,7 @@ namespace ClanceysLib
 		}
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
-			return true;
+			return false;
 		}
 		//
 	}

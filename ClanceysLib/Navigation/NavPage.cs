@@ -10,47 +10,53 @@ namespace ClanceysLib
 	public class NavPage : UIView
 	{
 		public List<NavIcon> Icons {get;set;}
-		public int Columns = 4;
-		public int Rows = 5;
-		public float Padding = 10;
+		public int Columns = 3;
+		public int Rows = 3;
+		public float Padding = 5;
 		public NavLauncher parent;
-		public NavPage():base()
+		public NavPage(int columns, int rows):base()
 		{
-			
+			Columns = columns;
+			Rows = rows;
+			Icons = new List<NavIcon>((Columns * Rows));
 		}
-		public NavPage (RectangleF rect): base(rect)
-		{
-			
-		}
-		
 		
 		public void Refresh()
 		{
-			float columnWidth = ((Frame.Width - (Padding * 2 )) / Columns);
+			ClearPage();
+			float columnWidth = ((Frame.Width - (Padding * (Columns + 1) )) / Columns);
 			float rowsHeight = ((Frame.Height - (Padding * 2 )) / Rows);
 			float currentH = Padding;
-			float currentW = 0;	
+			float currentW = Padding;
+			int currentColumn = 1;
 			foreach(var icon in Icons)
 			{
-				var x =  Padding;// - icon.Frame.Width ) /2;
-				var y = Padding;// - icon.Frame.Height ) /2;
-				if(currentW + x + columnWidth >  Frame.Width)
+				if(Columns < currentColumn)
 				{
-					currentW = 0;
+					currentColumn = 1;
+					currentW = Padding;
 					currentH += rowsHeight + Padding;
 				}
-				x += currentW ;
-				y += currentH ;
-				Console.WriteLine(x + " : " + y);
+				Console.WriteLine(currentW + " : " + currentH);
 				icon.parent = this;
 				icon.ColumnWidth = columnWidth;
 				icon.RowHeight = rowsHeight;
-				icon.Refresh(new PointF( x, y));
+				icon.Refresh(new PointF( currentW, currentH));
 				if(icon.Superview != this)
 					this.AddSubview(icon);
-				currentW += columnWidth;				
+				currentColumn ++;
+				currentW += columnWidth + Padding;
 			}	
 		}
+		
+		private void ClearPage()
+		{
+			foreach(var view in this.Subviews)
+			{
+				view.RemoveFromSuperview();	
+			}
+		}
+		
 		public override void TouchesBegan (NSSet touches, UIEvent evt)
 		{
 			base.TouchesBegan (touches, evt);
