@@ -31,14 +31,17 @@ namespace ClanceysLib
 			// Navbar 
 			mainFrame.Height -= 44;
 			MainView = new UIView (mainFrame);
-			var scrollRect = MainView.Bounds;
+			var scrollRect = MainView.Frame;
 			scrollRect.Height -= pageControlH;
 			scrollView = new UIScrollView (scrollRect);
 			scrollView.ShowsHorizontalScrollIndicator = false;
 			scrollView.ShowsVerticalScrollIndicator = false;
+			scrollView.Scrolled += ScrollViewScrolled;
+			scrollView.PagingEnabled = true;
 			var pageRect = new RectangleF (0, scrollRect.Height, scrollRect.Width, pageControlH);
 			pageControl = new UIPageControl (pageRect);
-			pageControl.BackgroundColor = UIColor.Black;
+			pageControl.BackgroundColor = UIColor.Black;			
+			pageControl.TouchUpInside += HandlePageControlTouchUpInside;
 			this.View.AddSubview (MainView);
 			MainView.AddSubview (scrollView);
 			MainView.AddSubview (pageControl);
@@ -93,8 +96,8 @@ namespace ClanceysLib
 			if (topModal is UIViewController)
 			{
 				//Fixes keyboard glitch for mt.d
-				if (topModal is MonoTouch.Dialog.DialogViewController)
-					(topModal as MonoTouch.Dialog.DialogViewController).FinishSearch ();
+				//if (topModal is MonoTouch.Dialog.DialogViewController)
+				//	(topModal as MonoTouch.Dialog.DialogViewController).FinishSearch ();
 				
 				var vcv = (topModal as UIViewController).View;
 				this.NavigationController.PopViewControllerAnimated (false);
@@ -122,10 +125,7 @@ namespace ClanceysLib
 
 		private void CreatePanels ()
 		{
-			scrollView.Scrolled += ScrollViewScrolled;
-			scrollView.PagingEnabled = true;
-			pageControl.TouchUpInside += HandlePageControlTouchUpInside;
-			
+			ClearScrollView();
 			int count = 0;
 			RectangleF scrollFrame = scrollView.Frame;
 			scrollFrame.Width = scrollFrame.Width * Pages.Count;
@@ -157,6 +157,13 @@ namespace ClanceysLib
 			
 			pageControl.Pages = count;
 		}
+		private void ClearScrollView()
+		{
+			foreach(var view in scrollView.Subviews)
+			{
+				view.RemoveFromSuperview();	
+			}
+		}
 		
 		private void ScrollViewScrolled (object sender, EventArgs e)
 		{
@@ -171,7 +178,7 @@ namespace ClanceysLib
 		}
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
-			return true;
+			return false;
 		}
 		//
 	}

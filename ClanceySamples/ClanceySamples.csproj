@@ -68,7 +68,7 @@
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>MonoTouch.Dialog.dll</HintPath>
+      <HintPath>..\..\MonoTouch.Dialog\MonoTouch.Dialog\bin\MonoTouch.Dialog.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +86,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="StackPanelView.cs" />
     <Compile Include="DemoElementApi.cs" />
+    <Compile Include="GridView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />

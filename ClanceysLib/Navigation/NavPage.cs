@@ -10,22 +10,20 @@ namespace ClanceysLib
 	public class NavPage : UIView
 	{
 		public List<NavIcon> Icons {get;set;}
-		public int Columns = 4;
-		public int Rows = 5;
+		public int Columns = 3;
+		public int Rows = 3;
 		public float Padding = 5;
 		public NavLauncher parent;
-		public NavPage():base()
+		public NavPage(int columns, int rows):base()
 		{
-			
+			Columns = columns;
+			Rows = rows;
+			Icons = new List<NavIcon>((Columns * Rows));
 		}
-		public NavPage (RectangleF rect): base(rect)
-		{
-			
-		}
-		
 		
 		public void Refresh()
 		{
+			ClearPage();
 			float columnWidth = ((Frame.Width - (Padding * (Columns + 1) )) / Columns);
 			float rowsHeight = ((Frame.Height - (Padding * 2 )) / Rows);
 			float currentH = Padding;
@@ -35,6 +33,7 @@ namespace ClanceysLib
 			{
 				if(Columns < currentColumn)
 				{
+					currentColumn = 1;
 					currentW = Padding;
 					currentH += rowsHeight + Padding;
 				}
@@ -49,6 +48,15 @@ namespace ClanceysLib
 				currentW += columnWidth + Padding;
 			}	
 		}
+		
+		private void ClearPage()
+		{
+			foreach(var view in this.Subviews)
+			{
+				view.RemoveFromSuperview();	
+			}
+		}
+		
 		public override void TouchesBegan (NSSet touches, UIEvent evt)
 		{
 			base.TouchesBegan (touches, evt);

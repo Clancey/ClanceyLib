@@ -38,6 +38,7 @@ namespace ClanceysLib
 		
 		public void Refresh(PointF location)
 		{
+			ClearView();
 			var frame = this.Frame;
 			frame.Location = location;
 			frame.Height = RowHeight;
@@ -52,12 +53,12 @@ namespace ClanceysLib
 			
 			var x = (frame.Width - image.Size.Width) /2;
 			button = UIButton.FromType(UIButtonType.Custom);
-			//Console.WriteLine("imageH :" + imageH);
-			//Console.WriteLine("imageSize : " + image.Size);
-			//Console.WriteLine("row : " + RowHeight);
-			var y = imageH - image.Size.Height;
-			//Console.WriteLine("y:" + y);
-			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
+			Console.WriteLine("imageH :" + imageH);
+			Console.WriteLine("imageSize : " + image.Size);
+			Console.WriteLine("row : " + RowHeight);
+			var y = (float)(Math.Round(imageH) - image.Size.Height);
+			Console.WriteLine("y:" + y);
+			button.Frame = new RectangleF(x,0,image.Size.Width,image.Size.Width);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
@@ -73,6 +74,14 @@ namespace ClanceysLib
 			label.Font = UIFont.FromName("Arial",TextFontSize);
 			label.TextAlignment = UITextAlignment.Center;
 			this.AddSubview(label);
+		}
+		
+		private void ClearView()
+		{
+			foreach(var view in this.Subviews)
+			{
+				view.RemoveFromSuperview();	
+			}
 		}
 
 		void HandleBtnTouchDown (object sender, EventArgs e)
