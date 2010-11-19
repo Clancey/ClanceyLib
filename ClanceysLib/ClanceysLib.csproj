@@ -79,6 +79,7 @@
     <Folder Include="MapKit\" />
     <Folder Include="Navigation\" />
     <Folder Include="Layout\" />
+    <Folder Include="AddressBook\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIControls\ScrollViewWithHeader.cs" />
@@ -97,8 +98,15 @@
     <Compile Include="Utils\ObjectFactory.cs" />
     <Compile Include="Layout\UIGrid.cs" />
     <Compile Include="Layout\LayoutAttributeAttributes.cs" />
+    <Compile Include="AddressBook\AddressBook.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
+      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
+      <Name>MonoTouch.Dialog</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
