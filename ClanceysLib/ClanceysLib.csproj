@@ -89,7 +89,6 @@
     <Compile Include="UIControls\RotatingViewController.cs" />
     <Compile Include="Data\Downloader.cs" />
     <Compile Include="Data\TableViewDataSource.cs" />
-    <Compile Include="MapKit\PolygonOverlay.cs" />
     <Compile Include="UIControls\StackPanel.cs" />
     <Compile Include="Navigation\NavLauncher.cs" />
     <Compile Include="Navigation\NavPage.cs" />
@@ -99,6 +98,11 @@
     <Compile Include="Layout\UIGrid.cs" />
     <Compile Include="Layout\LayoutAttributeAttributes.cs" />
     <Compile Include="AddressBook\AddressBook.cs" />
+    <Compile Include="Data\ObservableCollection.cs" />
+    <Compile Include="Data\NotifyCollectionChangedEventHandler.cs" />
+    <Compile Include="Data\NotifyCollectionChangedEventArgs.cs" />
+    <Compile Include="Data\NotifyCollectionChangedAction.cs" />
+    <Compile Include="Data\INotifyCollectionChanged.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />

@@ -58,7 +58,7 @@ namespace ClanceysLib
 			Console.WriteLine("row : " + RowHeight);
 			var y = (float)(Math.Round(imageH) - image.Size.Height);
 			Console.WriteLine("y:" + y);
-			button.Frame = new RectangleF(x,0,image.Size.Width,image.Size.Width);
+			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());

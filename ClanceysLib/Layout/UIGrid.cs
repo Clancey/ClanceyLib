@@ -14,7 +14,7 @@ namespace ClanceysLib
 		private int rows;
 		public float ColumnPadding = 5;
 		public float RowPadding = 5;
-		private List<ViewItem> views = new List<ViewItem>();
+		private List<GridViewItem> views = new List<GridViewItem>();
 		private bool useCounts;
 		public UIGrid (RectangleF rect,int Columns,int Rows) :base (rect)
 		{
@@ -37,23 +37,34 @@ namespace ClanceysLib
 			int columnSpan = 1;
 			int row = 1;
 			int rowSpan = 1;
-			var members = this.Superview.GetType().GetFields();
-			var field = members.Where(x=> x.GetValue(this.Superview) == view).FirstOrDefault();
-			if(field != null)
+			if(view is GridViewItem)
 			{
-				object[] layout = field.GetCustomAttributes(typeof(LayoutAttribute),false);
-				if(layout.Count() == 1)
+				var theView = view as GridViewItem;
+				column = theView.Column;
+				row = theView.Row;
+				columnSpan = theView.ColumnSpan;
+				rowSpan = theView.RowSpan;
+			}
+			else
+			{
+				var members = this.Superview.GetType().GetFields();
+				var field = members.Where(x=> x.GetValue(this.Superview) == view).FirstOrDefault();
+				if(field != null)
 				{
-					var l = (LayoutAttribute)layout[0];
-					column = l.Column;
-					row = l.Row;
-				}
-				object[] span = field.GetCustomAttributes(typeof(SpanAttribute),false);
-				if(span.Count() == 1)
-				{
-					var s = (SpanAttribute)span[0];
-					columnSpan = s.ColumnSpan;
-					rowSpan = s.RowSpan;
+					object[] layout = field.GetCustomAttributes(typeof(LayoutAttribute),false);
+					if(layout.Count() == 1)
+					{
+						var l = (LayoutAttribute)layout[0];
+						column = l.Column;
+						row = l.Row;
+					}
+					object[] span = field.GetCustomAttributes(typeof(SpanAttribute),false);
+					if(span.Count() == 1)
+					{
+						var s = (SpanAttribute)span[0];
+						columnSpan = s.ColumnSpan;
+						rowSpan = s.RowSpan;
+					}
 				}
 			}
 			
@@ -62,10 +73,19 @@ namespace ClanceysLib
 			frame.Size = getSize(columnSpan,rowSpan);
 			
 			view.Frame = frame;
+			if(view is GridViewItem)
+			{
+				var theview =  view as GridViewItem;
+				views.Add(theview);
+				base.AddSubview(theview.View);
+			}
+			else
+			{
+				views.Add(new GridViewItem(){View = view,Column = column,ColumnSpan = columnSpan,Row = row,RowSpan = rowSpan});
+				base.AddSubview (view);
+			}
 			
-			views.Add(new ViewItem(){View = view,Column = column,ColumnSpan = columnSpan,Row = row,RowSpan = rowSpan});
 			
-			base.AddSubview (view);
 		}
 		
 		public override void WillRemoveSubview (UIView uiview)
@@ -117,14 +137,13 @@ namespace ClanceysLib
 			
 		}
 		
-		private class ViewItem
+		public class GridViewItem : UIView
 		{
 			public int Column {get;set;}
 			public int ColumnSpan {get;set;}
 			public int Row {get;set;}
-			public int RowSpan {get;set;}
-			
-			public UIView View {get;set;}
+			public int RowSpan {get;set;}			
+			public UIView View {get ;set;}
 		}
 		
 	}
