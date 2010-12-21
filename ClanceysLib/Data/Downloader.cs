@@ -15,7 +15,7 @@ namespace ClanceysLib
 	/// If the app runs out of the alloted background time, It will alert the user to reopen the app to avoid disruption.
 	/// 
 	/// Use:
-	/// To use just call Download.Add();
+	/// To use just call Downloader.Add();
 	/// </summary>
 	public static class Downloader
 	{
@@ -195,7 +195,7 @@ namespace ClanceysLib
 			{
 				var fileName = Path.GetFileNameWithoutExtension (filePath);
 				setStatus (statusType.Update, fileName);
-				//TODO: Remote Sleeper Add your code to download the file or process it in some way.
+				//TODO: Remove Sleeper Add your code to download the file or process it in some way.
 				
 				// simulates the time it would take to download something
 				Thread.Sleep (6000);
