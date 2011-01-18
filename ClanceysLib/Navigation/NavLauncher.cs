@@ -50,8 +50,13 @@ namespace ClanceysLib
 
 		public override void ViewWillAppear (bool animated)
 		{
+			if(RefreshPages != null)
+			{
+				RefreshPages();
+			}
 			CreatePanels ();
 		}
+		public Action RefreshPages {get;set;}
 
 		public void LaunchModal (UIResponder responder)
 		{
@@ -96,8 +101,8 @@ namespace ClanceysLib
 			if (topModal is UIViewController)
 			{
 				//Fixes keyboard glitch for mt.d
-				//if (topModal is MonoTouch.Dialog.DialogViewController)
-				//	(topModal as MonoTouch.Dialog.DialogViewController).FinishSearch ();
+				if (topModal is MonoTouch.Dialog.DialogViewController)
+					(topModal as MonoTouch.Dialog.DialogViewController).FinishSearch ();
 				
 				var vcv = (topModal as UIViewController).View;
 				this.NavigationController.PopViewControllerAnimated (false);

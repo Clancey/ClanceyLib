@@ -159,8 +159,11 @@ namespace ClanceysLib
 			foreach (var prop in  item.GetType().GetProperties())
 			{
 				var col = generateColumn(prop);
-				col.ColIndex = colIndex;
-				_columns.Add(col);
+				if(col != null)
+				{
+					col.ColIndex = colIndex;
+					_columns.Add(col);
+				}
 				colIndex ++;
 			}
 			

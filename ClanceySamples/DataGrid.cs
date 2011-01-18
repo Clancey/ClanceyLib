@@ -32,9 +32,14 @@ namespace ClanceySamples
 	
 	public class MyDataRow
 	{
+		[HeaderVisible(true)]
+		[ColumnWidth(50)]
+		[ColumnWidthTypeAttribute(UIDataGridView.ColumnWidthType.Fixed)]
 		public int PrimaryKey {get;set;}
+		[HeaderTitle("A")]
 		public string ColumnA {get;set;}
-		[ColumnWidthType(UIDataGridView.ColumnWidthType.Auto)]
+		[HeaderTitle("Cost")]
+		[ColumnWidthType(UIDataGridView.ColumnWidthType.Fixed)]
 		public double ColumnB {get;set;}
 		[ColumnWidthType(UIDataGridView.ColumnWidthType.Auto)]
 		public string Description {get;set;} 
