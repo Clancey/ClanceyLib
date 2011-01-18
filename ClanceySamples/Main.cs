@@ -73,6 +73,16 @@ namespace ClanceySamples
 								return new DialogViewController(DemoElementApi());	
 							}
 						},
+						new NavIcon()
+						{
+							Image = Images.Favorites,
+							Title = "Datagrid",
+							ModalView = delegate()
+							{
+								return new DataGrid(this.window.Frame);	
+							}
+							
+						}
 					}
 				},
 				new NavPage(3,3)

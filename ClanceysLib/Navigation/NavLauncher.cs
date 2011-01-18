@@ -118,8 +118,11 @@ namespace ClanceysLib
 		public void FadeOutDidFinish ()
 		{
 			var modal = topModal as UIView;
-			modal.Transform = CGAffineTransform.MakeScale (1f, 1f);
-			modal.RemoveFromSuperview ();
+			if(modal != null)
+			{
+				modal.Transform = CGAffineTransform.MakeScale (1f, 1f);
+				modal.RemoveFromSuperview ();
+			}
 			topModal = null;
 		}
 

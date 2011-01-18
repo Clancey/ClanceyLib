@@ -24,14 +24,22 @@ namespace ClanceysLib
 		public UIImage Image {get;set;}
 		public Func<UIResponder> ModalView{get;set;}
 		public string Title {get;set;}
-		public int NotificationCount {get;set;}
 		public NavPage parent;
 		private UIButton button;
 		private UILabel label;
+		private NavIconBadge badge;
+		
+		public int NotificationCount
+		{
+			get{return badge.BadgeNumber;}
+			set {badge.BadgeNumber = value;}
+		}
 		
 		public NavIcon ()
 		{
 			this.Frame = new RectangleF(0,0,0,0);
+			badge = new NavIconBadge();
+			badge.BadgeColor = UIColor.Red;
 			
 		}
 		
@@ -44,7 +52,6 @@ namespace ClanceysLib
 			frame.Height = RowHeight;
 			frame.Width = ColumnWidth;
 			this.Frame = frame;
-			
 			var imageH = RowHeight - padding - (TextFontSize + 5);
 			var image = Graphics.ResizeImage(new SizeF(ColumnWidth,imageH),Image,KeepImageAspectRation);
 			//var image = Image;
@@ -59,6 +66,7 @@ namespace ClanceysLib
 			var y = (float)(Math.Round(imageH) - image.Size.Height);
 			Console.WriteLine("y:" + y);
 			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
+			badge.SetLocation(new PointF(button.Frame.Width,y),false);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
@@ -74,6 +82,7 @@ namespace ClanceysLib
 			label.Font = UIFont.FromName("Arial",TextFontSize);
 			label.TextAlignment = UITextAlignment.Center;
 			this.AddSubview(label);
+			this.AddSubview(badge);
 		}
 		
 		private void ClearView()
