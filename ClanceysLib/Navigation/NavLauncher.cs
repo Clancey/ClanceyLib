@@ -16,7 +16,7 @@ namespace ClanceysLib
 		public int Columns = 3;
 		public int Rows = 5;
 		public float spacing = 10;
-		private UIView MainView;
+		public UIView MainView;
 		private UIScrollView scrollView;
 		private UIPageControl pageControl;
 		private float pageControlH = 30;
@@ -60,6 +60,9 @@ namespace ClanceysLib
 
 		public void LaunchModal (UIResponder responder)
 		{
+			if(closing || Adding)
+				return;
+			Adding = true;
 			topModal = responder;
 			if (responder is UIView)
 			{
@@ -75,7 +78,7 @@ namespace ClanceysLib
 				this.NavigationController.PushViewController ((UIViewController)topModal, false);
 			}
 		}
-
+		bool Adding;
 		private void AddViewToScreen (UIView modal)
 		{
 			MainView.AddSubview (modal);
@@ -91,13 +94,21 @@ namespace ClanceysLib
 				(topModal as UIViewController).NavigationItem.LeftBarButtonItem = leftButton;
 			else
 				NavigationItem.LeftBarButtonItem = leftButton;
+			Adding = false;
 		}
-
+		bool closing;
 		public void CloseModal ()
 		{
+			if(closing || topModal == null)
+				return;	
+			closing = true;
 			NavigationItem.LeftBarButtonItem = null;
-			if (topModal == null)
-				return;
+			var tb = new UITextField(RectangleF.Empty);
+			this.View.AddSubview(tb);
+			this.View.BringSubviewToFront(tb);
+			tb.BecomeFirstResponder();
+			tb.ResignFirstResponder();
+			tb.RemoveFromSuperview();
 			if (topModal is UIViewController)
 			{
 				//Fixes keyboard glitch for mt.d
@@ -108,6 +119,7 @@ namespace ClanceysLib
 				this.NavigationController.PopViewControllerAnimated (false);
 				MainView.AddSubview (vcv);
 				topModal = vcv;
+				
 			}
 			var modal = topModal as UIView;
 			UIView.BeginAnimations ("closeModel");
@@ -117,18 +129,18 @@ namespace ClanceysLib
 			modal.Transform = CGAffineTransform.MakeScale (0.2f, 0.2f);
 			modal.Alpha = 0.5f;
 			UIView.CommitAnimations ();
+			
 		}
 
 		[Export("fadeOutDidFinish")]
 		public void FadeOutDidFinish ()
 		{
-			var modal = topModal as UIView;
-			if(modal != null)
-			{
-				modal.Transform = CGAffineTransform.MakeScale (1f, 1f);
-				modal.RemoveFromSuperview ();
-			}
-			topModal = null;
+			
+			var	modal = (UIView)topModal;
+			modal.Transform = CGAffineTransform.MakeScale (1f, 1f);
+			modal.RemoveFromSuperview ();			
+			topModal = null;			
+			closing = false;
 		}
 
 		private void CreatePanels ()

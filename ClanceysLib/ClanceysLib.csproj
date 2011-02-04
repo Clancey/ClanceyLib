@@ -91,6 +91,7 @@
     <Folder Include="Navigation\" />
     <Folder Include="Layout\" />
     <Folder Include="AddressBook\" />
+    <Folder Include="MT.D\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIControls\ScrollViewWithHeader.cs" />
@@ -117,6 +118,9 @@
     <Compile Include="Navigation\NavIconBadge.cs" />
     <Compile Include="Layout\DatagridAttributes.cs" />
     <Compile Include="Layout\UIDataGridView.cs" />
+    <Compile Include="UIControls\MBProgressHUD.cs" />
+    <Compile Include="MT.D\ButtonElement.cs" />
+    <Compile Include="UIControls\UIGlassyButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />

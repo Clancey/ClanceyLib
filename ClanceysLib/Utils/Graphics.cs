@@ -2,22 +2,23 @@ using System;
 using MonoTouch.UIKit;
 using System.Drawing;
 using MonoTouch.CoreGraphics;
+using MonoTouch.CoreAnimation;
 namespace ClanceysLib
 {
 	public class Graphics
 	{
 		static CGPath smallPath = MakeRoundedPath (48);
 		static CGPath largePath = MakeRoundedPath (73);
-		public static UIImage AdjustImage(RectangleF rect,UIImage template, CGBlendMode mode,UIColor color)
+		public static UIImage AdjustImage (RectangleF rect, UIImage template, CGBlendMode mode, UIColor color)
 		{
-			float red = new float();
-			float green = new float();
-			float blue = new float();
-			float alpha = new float();
+			float red = new float ();
+			float green = new float ();
+			float blue = new float ();
+			float alpha = new float ();
 			if (color == null)
-				color = UIColor.FromRGB(100,0,0);
-			color.GetRGBA(out red,out green, out blue, out alpha);
-			return 	AdjustImage(rect,template,mode,red,green,blue,alpha);
+				color = UIColor.FromRGB (100, 0, 0);
+			color.GetRGBA (out red, out green, out blue, out alpha);
+			return AdjustImage (rect, template, mode, red, green, blue, alpha);
 		}
 		public static UIImage AdjustImage (RectangleF rect, UIImage template, CGBlendMode mode, float red, float green, float blue, float alpha)
 		{
@@ -38,30 +39,31 @@ namespace ClanceysLib
 				}
 			}
 		}
-	
-		public static UIImage ResizeImage (SizeF size,UIImage image,bool KeepRatio)
+
+		public static UIImage ResizeImage (SizeF size, UIImage image, bool KeepRatio)
 		{
 			var curSize = image.Size;
 			SizeF newSize;
-			if(KeepRatio)
+			if (KeepRatio)
 			{
-				var ratio = Math.Min( size.Width/curSize.Width, size.Height/curSize.Height);
-				newSize = new SizeF(curSize.Width * ratio, curSize.Height * ratio);
+				var ratio = Math.Min (size.Width / curSize.Width, size.Height / curSize.Height);
+				newSize = new SizeF (curSize.Width * ratio, curSize.Height * ratio);
 			}
+
 			else
 			{
-				newSize = size;	
+				newSize = size;
 			}
 			
-			return image.Scale(newSize);
-
+			return image.Scale (newSize);
+			
 			
 		}
-		
+
 		// Check for multi-tasking as a way to determine if we can probe for the "Scale" property,
 		// only available on iOS4 
 		public static bool HighRes = UIDevice.CurrentDevice.IsMultitaskingSupported && UIScreen.MainScreen.Scale > 1;
-		
+
 		// Child proof the image by rounding the edges of the image
 		public static UIImage RemoveSharpEdges (UIImage image)
 		{
@@ -72,17 +74,17 @@ namespace ClanceysLib
 			UIGraphics.BeginImageContext (image.Size);
 			var c = UIGraphics.GetCurrentContext ();
 			
-			c.AddPath (MakeRoundedPath(image.Size.Height));
+			c.AddPath (MakeRoundedPath (image.Size.Height));
 			
-			image.Draw (new RectangleF (PointF.Empty,image.Size));
+			image.Draw (new RectangleF (PointF.Empty, image.Size));
 			var converted = UIGraphics.GetImageFromCurrentImageContext ();
 			UIGraphics.EndImageContext ();
 			return converted;
 		}
-		
-		internal static CGPath MakeRoundedPath (float size)
+
+		static internal CGPath MakeRoundedPath (float size)
 		{
-			float hsize = size/2;
+			float hsize = size / 2;
 			
 			var path = new CGPath ();
 			path.MoveToPoint (size, hsize);
@@ -93,6 +95,28 @@ namespace ClanceysLib
 			path.CloseSubpath ();
 			
 			return path;
+		}
+
+		public static CALayer MakeBackgroundLayer (UIImage image, RectangleF frame)
+		{
+			
+			var textureColor = UIColor.FromPatternImage (image);
+			
+			UIGraphics.BeginImageContext (frame.Size);
+					
+			var c = UIGraphics.GetCurrentContext ();
+			image.DrawAsPatternInRect (frame);
+			
+			//Images.MenuShadow.Draw (frame);
+			var result = UIGraphics.GetImageFromCurrentImageContext ();
+			
+			UIGraphics.EndImageContext ();
+			
+			var back = new CALayer { Frame = frame };
+			//TODO:
+			//Graphics.ConfigLayerHighRes (back);
+			back.Contents = result.CGImage;
+			return back;
 		}
 	}
 }

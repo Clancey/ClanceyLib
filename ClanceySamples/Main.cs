@@ -37,6 +37,7 @@ namespace ClanceySamples
 						{
 							Image = Images.Contacts,
 							Title = "Test Label",
+							NotificationCount = 10,
 							ModalView = delegate() { 
 								return new TestView(new RectangleF(100,100,100,100),"Label Text"); },
 						},

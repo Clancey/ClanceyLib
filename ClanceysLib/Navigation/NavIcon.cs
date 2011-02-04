@@ -47,6 +47,7 @@ namespace ClanceysLib
 		public void Refresh(PointF location)
 		{
 			ClearView();
+			Console.WriteLine("refreshing " + this.Title);
 			var frame = this.Frame;
 			frame.Location = location;
 			frame.Height = RowHeight;
@@ -66,7 +67,7 @@ namespace ClanceysLib
 			var y = (float)(Math.Round(imageH) - image.Size.Height);
 			Console.WriteLine("y:" + y);
 			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
-			badge.SetLocation(new PointF(button.Frame.Width,y),false);
+			badge.SetLocation(new PointF(button.Frame.Width - badge.Frame.Width,y),false);
 			button.SetImage(Image,UIControlState.Normal);	
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
@@ -78,6 +79,7 @@ namespace ClanceysLib
 			this.AddSubview(button);
 			var lblLoc = new PointF(0,image.Size.Height + 5);
 			label = new UILabel(new RectangleF(lblLoc,new SizeF(ColumnWidth,TextFontSize)));
+			label.BackgroundColor = UIColor.Clear;
 			label.Text = Title;
 			label.Font = UIFont.FromName("Arial",TextFontSize);
 			label.TextAlignment = UITextAlignment.Center;

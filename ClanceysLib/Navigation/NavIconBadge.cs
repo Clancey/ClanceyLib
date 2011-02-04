@@ -11,6 +11,8 @@ namespace ClanceysLib
 		SizeF numberSize;
 		UIFont font = UIFont.BoldSystemFontOfSize(14f);
 		string countString;
+		const float badgeCornerRoundness = .4f;
+		
 		public UIColor BadgeColor {get;set;}
 		public UIColor BadgeColorHighlighted {get;set;}
 		public bool DockLeft {get;set;}
@@ -44,12 +46,12 @@ namespace ClanceysLib
 			NSString ns = new NSString(countString);
 			numberSize = ns.StringSize (font);
 
-			Width = Convert.ToInt32(numberSize.Width + 10);
+			Width = Convert.ToInt32(numberSize.Width + 13);
 			
 			if(!DockLeft)
 				origin = new PointF(origin.X + Width, origin.Y);
 			
-			this.Frame = new RectangleF(origin, new SizeF(Width, 18));
+			this.Frame = new RectangleF(origin, new SizeF(Width, Width));
 		}
 		
 		private void CalculateSize()
@@ -77,23 +79,87 @@ namespace ClanceysLib
 			else 
 				col = UIColor.FromRGBA(0.530f, 0.600f, 0.738f, 1.000f);
 
-			context.SetFillColorWithColor (col.CGColor);
-		
+			context.SetShouldAntialias(true);
+			CGLayer buttonLayer = CGLayer.Create(context,rect.Size);
+			drawRoundedRect(buttonLayer.Context,rect);
+			context.DrawLayer(buttonLayer,rect);
+			buttonLayer.Dispose();
+			
 
-			context.BeginPath();
-			float a = Convert.ToSingle(Math.PI / 2f);
-			float b = Convert.ToSingle(3f * Math.PI / 2f);
-			context.AddArc(radius, radius, radius, a, b, false);
-			context.AddArc(bounds.Size.Width - radius, radius, radius, b, a, false);
-			context.ClosePath();
-			context.FillPath();
+			CGLayer frameLayer = CGLayer.Create(context,rect.Size);
+			drawFrame(frameLayer.Context,rect);
+			context.DrawLayer(frameLayer,rect);
+			frameLayer.Dispose();
+	
+	
+			UIFont textFont = UIFont.BoldSystemFontOfSize(13); 
+			SizeF textSize = this.StringSize(_badgeNumber.ToString(),textFont);
+		//[self.badgeText drawAtPoint:CGPointMake((rect.size.width/2-textSize.width/2), (rect.size.height/2-textSize.height/2)) withFont:textFont];
+
+			var newPoint = new PointF((rect.Size.Width/2-textSize.Width/2), (rect.Size.Height/2-textSize.Height/2));
+			
+			
+			
 			context.RestoreState();
 			
 			bounds.X = (bounds.Size.Width - numberSize.Width) / 2 + 0.5f;
+			bounds.Y = (bounds.Size.Height - numberSize.Height) / 2 + 0.5f;
 
 			context.SetBlendMode( CGBlendMode.Clear);
-			this.DrawString(countString, bounds, font);
+			this.DrawString(countString, bounds, textFont);
 		}
+		
+		
+		// Draws the Badge with Quartz
+		private void drawRoundedRect (CGContext context, RectangleF rect)
+		{
+			
+			float radius = rect.GetMaxY() * badgeCornerRoundness;
+			float puffer = rect.GetMaxY() * 0.10f;
+			
+			float maxX = rect.GetMaxX() - puffer;
+			float maxY = rect.GetMaxY() - puffer;
+			float minX = rect.GetMinX() + puffer;
+			float minY = rect.GetMinY() + puffer;
+			
+			context.BeginPath();
+			context.SetFillColorWithColor(BadgeColor.CGColor);
+			context.AddArc((float)(maxX-radius), (float)(minY+radius), radius,(float)(Math.PI +(Math.PI/2)), 0f, false);
+			context.AddArc(maxX-radius, maxY-radius, radius, 0, (float)(Math.PI/2), false);
+			
+			context.AddArc(minX+radius, maxY-radius, radius, (float)(Math.PI/2), (float)Math.PI, false);
+			context.AddArc(minX+radius, minY+radius, radius, (float)Math.PI, (float)(Math.PI+Math.PI/2), false);
+			context.SetShadowWithColor(new SizeF(2,2),3f,UIColor.Black.CGColor);
+			context.ClosePath();
+			context.FillPath();
+			
+		}
+
+		// Draws the Badge Frame with Quartz
+		private void drawFrame (CGContext context, RectangleF rect)
+		{
+			float radius = rect.GetMaxY() * badgeCornerRoundness;
+			float puffer = rect.GetMaxY() * 0.10f;
+			
+			float maxX = rect.GetMaxX() - puffer;
+			float maxY = rect.GetMaxY() - puffer;
+			float minX = rect.GetMinX() + puffer;
+			float minY = rect.GetMinY() + puffer;
+			
+			context.BeginPath();
+			context.SetLineWidth(2f);
+			context.SetStrokeColorWithColor(UIColor.White.CGColor);
+			
+			
+			context.AddArc( maxX-radius, minY+radius, radius, (float)(Math.PI+(Math.PI/2)), 0, false);
+			context.AddArc( maxX-radius, maxY-radius, radius, 0, (float)(Math.PI/2), false);
+			context.AddArc( minX+radius, maxY-radius, radius, (float)(Math.PI/2), (float)Math.PI, false);
+			context.AddArc( minX+radius, minY+radius, radius, (float)Math.PI,(float)( Math.PI+Math.PI/2), false);
+			context.ClosePath();
+			context.StrokePath();
+			
+		}
+		
 	}
 	
 }

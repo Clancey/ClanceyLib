@@ -21,7 +21,27 @@ namespace ClanceysLib
 		public PointF ContentOffset = new PointF(0,0);
 		public EventHandler Scrolled{get;set;}
 		public SizeF ContentSize{get;private set;}
-		public float ZoomScale {get;private set;}
+		public float ZoomScale { 
+			get {
+				return _mainContent.ZoomScale;
+			}			
+			set {
+				_mainContent.SetZoomScale(value,false);	
+				ZoomHeader();
+			}
+		}
+		public RectangleF VisbleContentRect
+		{
+			get {
+				var location = _mainContent.ContentOffset;
+				var size = _mainContent.Bounds.Size;
+				return new RectangleF(location,size);
+			}
+			set {
+				_mainContent.ScrollRectToVisible(value,false);
+				scrollHeader();				
+			}
+		}
 		public NSAction Zoomed {get;set;}
 		
 
@@ -133,7 +153,6 @@ namespace ClanceysLib
             _mainContent.AddSubview(content);
             _mainContent.Bounces = false;
 			ContentSize = cRect.Size;
-			ZoomScale = _mainContent.ZoomScale;
             if (enableZoom)
             {
                 _mainContent.MaximumZoomScale = maxZoom;
@@ -147,14 +166,12 @@ namespace ClanceysLib
                                                             //Tell the class you are zooming
                                                             isZooming = true;
                                                             ZoomHeader();
-															ZoomScale = _mainContent.ZoomScale;
                                                         };
                 _mainContentDelegate.ZoomEnded += delegate
                                                       {
                                                           ZoomHeader();
                                                           isZooming = false;
                                                           // Rescroll the content to make sure it lines up with the header
-															ZoomScale = _mainContent.ZoomScale;
 															if(Zoomed != null)
 																Zoomed();
                                                           //scrollContent();
