@@ -3,10 +3,14 @@ using System.Drawing;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using MonoTouch.CoreGraphics;
+using MonoTouch.CoreAnimation;
+using System.Collections.Generic;
+using OpenTK.Graphics.ES11;
 namespace ClanceysLib
 {
 	public class NavIconBadge : UIView
 	{
+		const float height = 25;
 		int Width {get;set;}
 		SizeF numberSize;
 		UIFont font = UIFont.BoldSystemFontOfSize(14f);
@@ -46,7 +50,8 @@ namespace ClanceysLib
 			NSString ns = new NSString(countString);
 			numberSize = ns.StringSize (font);
 
-			Width = Convert.ToInt32(numberSize.Width + 13);
+			Width = Convert.ToInt32(numberSize.Width);
+			Width = (int)(Width < height ? height : Width);
 			
 			if(!DockLeft)
 				origin = new PointF(origin.X + Width, origin.Y);
@@ -77,35 +82,39 @@ namespace ClanceysLib
 			if (this.BadgeColor != null)
 				col = this.BadgeColor;
 			else 
-				col = UIColor.FromRGBA(0.530f, 0.600f, 0.738f, 1.000f);
+				col = UIColor.FromRGBA(139f, 0f, 0f, 1.000f);
 
 			context.SetShouldAntialias(true);
+			
 			CGLayer buttonLayer = CGLayer.Create(context,rect.Size);
 			drawRoundedRect(buttonLayer.Context,rect);
 			context.DrawLayer(buttonLayer,rect);
 			buttonLayer.Dispose();
 			
+			
+			CGLayer shineLayer = CGLayer.Create(context,rect.Size);
+			drawGradient(shineLayer.Context,rect);
+			context.DrawLayer(shineLayer,rect);
+			shineLayer.Dispose();
 
 			CGLayer frameLayer = CGLayer.Create(context,rect.Size);
 			drawFrame(frameLayer.Context,rect);
 			context.DrawLayer(frameLayer,rect);
 			frameLayer.Dispose();
 	
-	
 			UIFont textFont = UIFont.BoldSystemFontOfSize(13); 
 			SizeF textSize = this.StringSize(_badgeNumber.ToString(),textFont);
-		//[self.badgeText drawAtPoint:CGPointMake((rect.size.width/2-textSize.width/2), (rect.size.height/2-textSize.height/2)) withFont:textFont];
-
+	
 			var newPoint = new PointF((rect.Size.Width/2-textSize.Width/2), (rect.Size.Height/2-textSize.Height/2));
 			
 			
 			
 			context.RestoreState();
 			
-			bounds.X = (bounds.Size.Width - numberSize.Width) / 2 + 0.5f;
-			bounds.Y = (bounds.Size.Height - numberSize.Height) / 2 + 0.5f;
+			bounds.X = (bounds.Size.Width  - numberSize.Width) / 2 ;
+			bounds.Y = (bounds.Size.Height  - numberSize.Height) / 2;
 
-			context.SetBlendMode( CGBlendMode.Clear);
+			UIColor.White.SetFill();
 			this.DrawString(countString, bounds, textFont);
 		}
 		
@@ -113,51 +122,67 @@ namespace ClanceysLib
 		// Draws the Badge with Quartz
 		private void drawRoundedRect (CGContext context, RectangleF rect)
 		{
+			var frame = rect;
+			frame.Y += 5;
+			frame.X += 2;
+			frame.Width -= 6;
+			frame.Height -=6;
 			
-			float radius = rect.GetMaxY() * badgeCornerRoundness;
-			float puffer = rect.GetMaxY() * 0.10f;
+			context.SetFillColorWithColor(UIColor.Black.ColorWithAlpha(.7f).CGColor);
+			context.FillEllipseInRect(frame);
 			
-			float maxX = rect.GetMaxX() - puffer;
-			float maxY = rect.GetMaxY() - puffer;
-			float minX = rect.GetMinX() + puffer;
-			float minY = rect.GetMinY() + puffer;
-			
-			context.BeginPath();
+			frame.Y -= 3;
 			context.SetFillColorWithColor(BadgeColor.CGColor);
-			context.AddArc((float)(maxX-radius), (float)(minY+radius), radius,(float)(Math.PI +(Math.PI/2)), 0f, false);
-			context.AddArc(maxX-radius, maxY-radius, radius, 0, (float)(Math.PI/2), false);
-			
-			context.AddArc(minX+radius, maxY-radius, radius, (float)(Math.PI/2), (float)Math.PI, false);
-			context.AddArc(minX+radius, minY+radius, radius, (float)Math.PI, (float)(Math.PI+Math.PI/2), false);
-			context.SetShadowWithColor(new SizeF(2,2),3f,UIColor.Black.CGColor);
-			context.ClosePath();
-			context.FillPath();
+			context.FillEllipseInRect(frame);
 			
 		}
 
 		// Draws the Badge Frame with Quartz
 		private void drawFrame (CGContext context, RectangleF rect)
 		{
-			float radius = rect.GetMaxY() * badgeCornerRoundness;
-			float puffer = rect.GetMaxY() * 0.10f;
+			var frame = rect;
+			frame.Y += 2;
+			frame.X += 2;
+			frame.Width -= 6;
+			frame.Height -=6;
 			
-			float maxX = rect.GetMaxX() - puffer;
-			float maxY = rect.GetMaxY() - puffer;
-			float minX = rect.GetMinX() + puffer;
-			float minY = rect.GetMinY() + puffer;
-			
-			context.BeginPath();
-			context.SetLineWidth(2f);
+			context.SetFillColorWithColor(UIColor.White.CGColor);
 			context.SetStrokeColorWithColor(UIColor.White.CGColor);
+			context.SetLineWidth(2f);
+			context.StrokeEllipseInRect(frame);
 			
+		}
+		
+		private void drawGradient(CGContext context, RectangleF rect)
+		{
 			
-			context.AddArc( maxX-radius, minY+radius, radius, (float)(Math.PI+(Math.PI/2)), 0, false);
-			context.AddArc( maxX-radius, maxY-radius, radius, 0, (float)(Math.PI/2), false);
-			context.AddArc( minX+radius, maxY-radius, radius, (float)(Math.PI/2), (float)Math.PI, false);
-			context.AddArc( minX+radius, minY+radius, radius, (float)Math.PI,(float)( Math.PI+Math.PI/2), false);
-			context.ClosePath();
-			context.StrokePath();
+			var shineFrame = rect;
+			shineFrame.Y += 2;
+			shineFrame.X += 4;
+			shineFrame.Width -= 8;
+			shineFrame.Height = (shineFrame.Height / 2);
 			
+			// the colors
+			var topColor = UIColor.White.ColorWithAlpha (0.5f).CGColor;
+			var bottomColor = UIColor.White.ColorWithAlpha (0.10f).CGColor;
+			List<float> colors = new List<float>();
+			colors.AddRange(topColor.Components);
+			colors.AddRange(bottomColor.Components);
+			float[] locations = new float[]{0, 1};
+			
+			CGGradient gradient = new CGGradient(topColor.ColorSpace,colors.ToArray(),locations);
+			
+			context.SaveState();
+			context.SetShouldAntialias(true);
+			context.AddEllipseInRect(shineFrame);
+			context.Clip();
+		
+		    var startPoint = new PointF(shineFrame.GetMidX(), shineFrame.GetMidY());
+		    var endPoint = new PointF(shineFrame.GetMidX(), shineFrame.GetMaxY());
+		
+			context.DrawLinearGradient(gradient,startPoint,endPoint,CGGradientDrawingOptions.DrawsBeforeStartLocation);
+			gradient.Dispose();
+			context.RestoreState();
 		}
 		
 	}

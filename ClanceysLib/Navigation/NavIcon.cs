@@ -39,7 +39,7 @@ namespace ClanceysLib
 		{
 			this.Frame = new RectangleF(0,0,0,0);
 			badge = new NavIconBadge();
-			badge.BadgeColor = UIColor.Red;
+			badge.BadgeColor = UIColor.FromRGBA(129f, 0f, 0f, 1.000f);
 			
 		}
 		
