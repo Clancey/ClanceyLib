@@ -55,7 +55,7 @@ namespace ClanceysLib
 
 		public void Redraw ()
 		{
-			float lastY = 0 + padding;
+			float lastY = this.Frame.Y + padding;
 			float maxWidth = 0;
 			
 			foreach (var view in Subviews)
@@ -63,7 +63,7 @@ namespace ClanceysLib
 				var rect = view.Frame;
 				if (StretchWidth)
 					rect.Width = this.Frame.Width - (padding * 2);
-				rect.X = padding;
+				rect.X = padding + this.Frame.X;
 				rect.Y = lastY;
 				
 				view.Frame = rect;

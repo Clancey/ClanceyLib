@@ -69,6 +69,11 @@ namespace ClanceysLib
 			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
 			badge.SetLocation(new PointF(button.Frame.Width - badge.Frame.Width,y),false);
 			button.SetImage(Image,UIControlState.Normal);	
+			//button.Layer.MasksToBounds = false;
+			//self.layer.cornerRadius = 8; // if you like rounded corners
+			//button.Layer.ShadowOffset = new SizeF(5f, 5f);
+			//button.Layer.ShadowRadius = 3;
+			//button.Layer.ShadowOpacity = 0.5f;
 			button.TouchDown += delegate {
 				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
 				

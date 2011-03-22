@@ -188,6 +188,10 @@ namespace ClanceysLib
 
 		#region Lifecycle methods
 
+		public MBProgressHUD () : this(UIApplication.SharedApplication.KeyWindow)
+		{
+		}
+
 		public MBProgressHUD (UIWindow window) : base(window.Bounds)
 		{
 			Initialize ();

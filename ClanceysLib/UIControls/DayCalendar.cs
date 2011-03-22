@@ -278,8 +278,6 @@ namespace ClanceysLib
 
 
 
-			#pragma mark -
-			#pragma mark Initialisation
 
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 // Only when xibless (interface buildder)
@@ -326,11 +324,6 @@ namespace ClanceysLib
 			}
 
 
-			#pragma mark -
-			#pragma mark Setup
-
-
-
 			private TimeLineView getTimeLineView ()
 			{
 				
@@ -345,8 +338,6 @@ namespace ClanceysLib
 				return timelineView;
 			}
 
-			#pragma mark -
-			#pragma mark View Event
 			public override void MovedToWindow ()
 			{
 				
@@ -356,8 +347,6 @@ namespace ClanceysLib
 			}
 
 
-			#pragma mark -
-			#pragma mark Reload Day
 
 			private void reloadDay ()
 			{
@@ -520,8 +509,6 @@ namespace ClanceysLib
 					
 				}
 
-				#pragma mark -
-				#pragma mark Setup
 
 // Setup array consisting of string
 // representing time aka 12 (12 am), 1 (1 am) ... 25 x
@@ -555,9 +542,6 @@ namespace ClanceysLib
 						return _periods;
 					}
 				}
-
-				#pragma mark -
-				#pragma mark Drawing
 
 				public override void Draw (RectangleF rect)
 				{

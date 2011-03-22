@@ -56,7 +56,7 @@ namespace ClanceysLib
 			if(!DockLeft)
 				origin = new PointF(origin.X + Width, origin.Y);
 			
-			this.Frame = new RectangleF(origin, new SizeF(Width, Width));
+			this.Frame = new RectangleF(origin, new SizeF(Width,height));
 		}
 		
 		private void CalculateSize()
@@ -106,8 +106,6 @@ namespace ClanceysLib
 			SizeF textSize = this.StringSize(_badgeNumber.ToString(),textFont);
 	
 			var newPoint = new PointF((rect.Size.Width/2-textSize.Width/2), (rect.Size.Height/2-textSize.Height/2));
-			
-			
 			
 			context.RestoreState();
 			

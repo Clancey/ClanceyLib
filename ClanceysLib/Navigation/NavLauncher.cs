@@ -103,25 +103,24 @@ namespace ClanceysLib
 				return;	
 			closing = true;
 			NavigationItem.LeftBarButtonItem = null;
-			var tb = new UITextField(RectangleF.Empty);
-			this.View.AddSubview(tb);
-			this.View.BringSubviewToFront(tb);
-			tb.BecomeFirstResponder();
-			tb.ResignFirstResponder();
-			tb.RemoveFromSuperview();
+			
+			var tb = new UITextField(new RectangleF(0,-40,40,40));
 			if (topModal is UIViewController)
-			{
-				//Fixes keyboard glitch for mt.d
-				if (topModal is MonoTouch.Dialog.DialogViewController)
-					(topModal as MonoTouch.Dialog.DialogViewController).FinishSearch ();
-				
+			{			
 				var vcv = (topModal as UIViewController).View;
+				vcv.AddSubview(tb);
+				tb.BecomeFirstResponder();
+				tb.ResignFirstResponder();
 				this.NavigationController.PopViewControllerAnimated (false);
 				MainView.AddSubview (vcv);
 				topModal = vcv;
 				
 			}
 			var modal = topModal as UIView;
+			
+			modal.AddSubview(tb);
+			tb.BecomeFirstResponder();
+			tb.ResignFirstResponder();
 			UIView.BeginAnimations ("closeModel");
 			UIView.SetAnimationDuration (0.5);
 			UIView.SetAnimationDelegate (this);

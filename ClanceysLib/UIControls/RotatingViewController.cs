@@ -75,7 +75,7 @@ namespace ClanceysLib
 
         private void SetView()
         {
-            Console.WriteLine(InterfaceOrientation);
+            //Console.WriteLine(InterfaceOrientation);
             switch (InterfaceOrientation)
             {
                 case UIInterfaceOrientation.Portrait:
