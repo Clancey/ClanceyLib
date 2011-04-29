@@ -8,13 +8,13 @@ namespace ClanceySamples
 	{
 		[Layout(4,1)]
 		[Span(3,1)]
-		public UITextField textInput;
+		public XamlControls.UITextField textInput;
 		[Layout(1,1)]
 		[Span(3,1)]
-		public UILabel label;
+		public XamlControls.UILabel label;
 		[Layout(1,2)]
 		[Span(6,6)]
-		public UIImageView imageView;
+		public XamlControls.UIImageView imageView;
 		private UIGrid grid;	
 		
 		public GridView (RectangleF rect) : base (rect)
@@ -26,12 +26,28 @@ namespace ClanceySamples
 			//pass in collumn/row width/height
 			//grid = new UIGrid(this.Frame,30f,30f);
 			
-			textInput = new UITextField(){BackgroundColor = UIColor.White};
+			textInput = new XamlControls.UITextField(){BackgroundColor = UIColor.White};
 			
-			label = new UILabel(){Text = "label 1"};
-			imageView = new UIImageView(Images.Featured);
+			label = new XamlControls.UILabel{Text = "label 1"};
+			imageView = new XamlControls.UIImageView(Images.Featured);
 			
 			this.AddSubview(grid);
+			
+			UIGrid.SetColumn(textInput,4);
+			UIGrid.SetColumnSpan(textInput,3);
+			
+			UIGrid.SetRow(textInput,1);
+			UIGrid.SetRowSpan(textInput,1);
+			
+			UIGrid.SetColumn(label,1);
+			UIGrid.SetColumnSpan(label,3);			
+			UIGrid.SetRow(label,1);
+			UIGrid.SetRowSpan(label,1);
+			
+			UIGrid.SetColumn(imageView,1);
+			UIGrid.SetColumnSpan(imageView,6);			
+			UIGrid.SetRow(imageView,2);
+			UIGrid.SetRowSpan(imageView,6);
 			
 			grid.AddSubview(textInput);
 			grid.AddSubview(label);

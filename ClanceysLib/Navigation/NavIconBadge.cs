@@ -8,17 +8,18 @@ using System.Collections.Generic;
 using OpenTK.Graphics.ES11;
 namespace ClanceysLib
 {
-	public class NavIconBadge : UIView
+	public class NavIconBadge : UIButton
 	{
-		const float height = 25;
+		static float height;
 		int Width {get;set;}
 		SizeF numberSize;
-		UIFont font = UIFont.BoldSystemFontOfSize(14f);
+		UIFont font = UIFont.BoldSystemFontOfSize(15f);
 		string countString;
 		const float badgeCornerRoundness = .4f;
-		
+		static UIImage bgimage = UIImage.FromFile("Images/SBBadgeBG.png");
 		public UIColor BadgeColor {get;set;}
 		public UIColor BadgeColorHighlighted {get;set;}
+		UILabel lbl;
 		public bool DockLeft {get;set;}
 		
 		private int _badgeNumber;
@@ -27,15 +28,28 @@ namespace ClanceysLib
 		{
 			get {return _badgeNumber;}
 			set {
+				if(_badgeNumber == value)
+					return;
 				_badgeNumber = value;
 				CalculateSize();
 			}
 			
 		}
 		
-		public NavIconBadge ()
+		public NavIconBadge () : base ()
 		{
-			this.BackgroundColor = UIColor.Clear;
+			//this.BackgroundColor = UIColor.Clear;
+			//BadgeColor = UIColor.Red;
+			
+			height = bgimage.Size.Height;
+			lbl = new UILabel();
+			lbl.TextAlignment = UITextAlignment.Center;
+			lbl.Font = font;
+			lbl.TextColor = UIColor.White;
+			lbl.BackgroundColor = UIColor.Clear;
+			lbl.ContentMode = UIViewContentMode.ScaleToFill;
+			lbl.BaselineAdjustment = UIBaselineAdjustment.AlignCenters;
+			this.AddSubview(lbl);
 		}
 		
 		public void SetLocation(PointF origin,bool dockLeft)
@@ -50,137 +64,32 @@ namespace ClanceysLib
 			NSString ns = new NSString(countString);
 			numberSize = ns.StringSize (font);
 
-			Width = Convert.ToInt32(numberSize.Width);
-			Width = (int)(Width < height ? height : Width);
+			Width = Convert.ToInt32(numberSize.Width) + 20;
+			Width = (int)(Width < bgimage.Size.Width ? bgimage.Size.Width : Width);
 			
 			if(!DockLeft)
 				origin = new PointF(origin.X + Width, origin.Y);
 			
 			this.Frame = new RectangleF(origin, new SizeF(Width,height));
+			lbl.Frame = new RectangleF(((Width - numberSize.Width + 1) /2) ,0,numberSize.Width,height -7.1f);
 		}
 		
 		private void CalculateSize()
 		{
+			var number = BadgeNumber.ToString();
+			if(_badgeNumber > 0)
+			{
+				this.SetBackgroundImage(bgimage.StretchableImage(12,0),UIControlState.Normal);
+				lbl.Text = number;
+				//this.SetTitle(number,UIControlState.Normal);
+			}
+			else
+			{
+				this.SetBackgroundImage(new UIImage(),UIControlState.Normal);
+				lbl.Text = "";
+				//this.SetTitle("",UIControlState.Normal);
+			}
 			CalculateSize(new PointF(Frame.X + Frame.Width,Frame.Y));
-		}
-		
-		
-		public override void Draw (RectangleF rect)
-		{
-			if(_badgeNumber == 0 )
-				return;
-			
-			var bounds = Frame;
-			var context = UIGraphics.GetCurrentContext();
-			
-			float radius = bounds.Size.Height / 2.0f;
-
-			context.SaveState();
-
-
-			UIColor col;
-			if (this.BadgeColor != null)
-				col = this.BadgeColor;
-			else 
-				col = UIColor.FromRGBA(139f, 0f, 0f, 1.000f);
-
-			context.SetShouldAntialias(true);
-			
-			CGLayer buttonLayer = CGLayer.Create(context,rect.Size);
-			drawRoundedRect(buttonLayer.Context,rect);
-			context.DrawLayer(buttonLayer,rect);
-			buttonLayer.Dispose();
-			
-			
-			CGLayer shineLayer = CGLayer.Create(context,rect.Size);
-			drawGradient(shineLayer.Context,rect);
-			context.DrawLayer(shineLayer,rect);
-			shineLayer.Dispose();
-
-			CGLayer frameLayer = CGLayer.Create(context,rect.Size);
-			drawFrame(frameLayer.Context,rect);
-			context.DrawLayer(frameLayer,rect);
-			frameLayer.Dispose();
-	
-			UIFont textFont = UIFont.BoldSystemFontOfSize(13); 
-			SizeF textSize = this.StringSize(_badgeNumber.ToString(),textFont);
-	
-			var newPoint = new PointF((rect.Size.Width/2-textSize.Width/2), (rect.Size.Height/2-textSize.Height/2));
-			
-			context.RestoreState();
-			
-			bounds.X = (bounds.Size.Width  - numberSize.Width) / 2 ;
-			bounds.Y = (bounds.Size.Height  - numberSize.Height) / 2;
-
-			UIColor.White.SetFill();
-			this.DrawString(countString, bounds, textFont);
-		}
-		
-		
-		// Draws the Badge with Quartz
-		private void drawRoundedRect (CGContext context, RectangleF rect)
-		{
-			var frame = rect;
-			frame.Y += 5;
-			frame.X += 2;
-			frame.Width -= 6;
-			frame.Height -=6;
-			
-			context.SetFillColorWithColor(UIColor.Black.ColorWithAlpha(.7f).CGColor);
-			context.FillEllipseInRect(frame);
-			
-			frame.Y -= 3;
-			context.SetFillColorWithColor(BadgeColor.CGColor);
-			context.FillEllipseInRect(frame);
-			
-		}
-
-		// Draws the Badge Frame with Quartz
-		private void drawFrame (CGContext context, RectangleF rect)
-		{
-			var frame = rect;
-			frame.Y += 2;
-			frame.X += 2;
-			frame.Width -= 6;
-			frame.Height -=6;
-			
-			context.SetFillColorWithColor(UIColor.White.CGColor);
-			context.SetStrokeColorWithColor(UIColor.White.CGColor);
-			context.SetLineWidth(2f);
-			context.StrokeEllipseInRect(frame);
-			
-		}
-		
-		private void drawGradient(CGContext context, RectangleF rect)
-		{
-			
-			var shineFrame = rect;
-			shineFrame.Y += 2;
-			shineFrame.X += 4;
-			shineFrame.Width -= 8;
-			shineFrame.Height = (shineFrame.Height / 2);
-			
-			// the colors
-			var topColor = UIColor.White.ColorWithAlpha (0.5f).CGColor;
-			var bottomColor = UIColor.White.ColorWithAlpha (0.10f).CGColor;
-			List<float> colors = new List<float>();
-			colors.AddRange(topColor.Components);
-			colors.AddRange(bottomColor.Components);
-			float[] locations = new float[]{0, 1};
-			
-			CGGradient gradient = new CGGradient(topColor.ColorSpace,colors.ToArray(),locations);
-			
-			context.SaveState();
-			context.SetShouldAntialias(true);
-			context.AddEllipseInRect(shineFrame);
-			context.Clip();
-		
-		    var startPoint = new PointF(shineFrame.GetMidX(), shineFrame.GetMidY());
-		    var endPoint = new PointF(shineFrame.GetMidX(), shineFrame.GetMaxY());
-		
-			context.DrawLinearGradient(gradient,startPoint,endPoint,CGGradientDrawingOptions.DrawsBeforeStartLocation);
-			gradient.Dispose();
-			context.RestoreState();
 		}
 		
 	}

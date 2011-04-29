@@ -1,0 +1,34 @@
+﻿<#@ template language="C#v3.5" hostspecific="True" #>
+<#@ output extension=".g.cs" #>
+<#@ assembly name="System.Xml"#>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+
+using System;
+using System.Drawing;
+
+namespace Xaml
+{
+<#	
+
+
+string[] uiviews= "UIView,UIActionSheet,UIControl,UIPickerView,UISegmentedControl,UITextField,UITextView,UIWindow,UIActivityIndicatorView,UIButton,UILabel,UIImageView,UIDatePicker,UINavigationBar,UIPageControl,UIProgressView,UIScrollView,UISearchBar,UISlider,UISwitch,UITabBar,UIToolbar,UIWebView".Split(new char[]{char.Parse(",")});
+foreach(var uiview in uiviews)
+{
+#>
+	public partial class <#= uiview #> : MonoTouch.UIKit.<#= uiview #>
+	{	
+		public <#= uiview #> (RectangleF rect) : base (rect)
+		{
+		
+		}
+	}		
+		
+<#
+}
+
+#>
+}

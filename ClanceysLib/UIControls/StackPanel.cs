@@ -38,7 +38,7 @@ namespace ClanceysLib
 		
 		public StackPanel (IntPtr handle) : base(handle)
 		{
-		
+
 		}
 		
 		public override void SubviewAdded (UIView uiview)

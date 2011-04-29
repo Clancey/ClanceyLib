@@ -123,6 +123,30 @@ namespace ClanceysLib
 			orgRect.Size = size;
 			return orgRect;
 		}
+		
+		public static RectangleF SetHeight (this RectangleF orgRect, int height)
+		{
+			orgRect.Height = height;
+			return orgRect;
+		}
+		
+		public static RectangleF SetHeight (this RectangleF orgRect, float height)
+		{
+			orgRect.Height = height;
+			return orgRect;
+		}
+		
+		public static RectangleF SetWidth (this RectangleF orgRect, int width)
+		{
+			orgRect.Width = width;
+			return orgRect;
+		}
+		
+		public static RectangleF SetWidth (this RectangleF orgRect, float width)
+		{
+			orgRect.Width = width;
+			return orgRect;
+		}
 
 		public static RectangleF Add (this RectangleF orgRect, SizeF size)
 		{
@@ -139,6 +163,15 @@ namespace ClanceysLib
 		{
 			orgRect.Location = orgRect.Location.Add (point);
 			orgRect.Size = orgRect.Size.Add (size);
+			return orgRect;
+		}
+		
+		public static RectangleF Add ( this RectangleF orgRect, float x, float y, float width, float height)
+		{
+			orgRect.X += x;
+			orgRect.Y += y;
+			orgRect.Width += width;
+			orgRect.Height += height;
 			return orgRect;
 		}
 
@@ -167,7 +200,15 @@ namespace ClanceysLib
 			orgRect.Location = orgRect.Location.Subtract (point);
 			return orgRect;
 		}
-
+		
+		public static RectangleF Subtract ( this RectangleF orgRect, float x, float y, float width, float height)
+		{
+			orgRect.X -= x;
+			orgRect.Y -= y;
+			orgRect.Width -= width;
+			orgRect.Height -= height;
+			return orgRect;
+		}
 
 		public static RectangleF SubtractSize (this RectangleF orgRect, float width, float height)
 		{

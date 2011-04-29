@@ -7,6 +7,7 @@ using MonoTouch.UIKit;
 using ClanceysLib;
 using System.Drawing;
 using MonoTouch.Dialog;
+using System.Reflection;
 
 namespace ClanceySamples
 {
@@ -111,6 +112,9 @@ namespace ClanceySamples
 		// This method is required in iPhoneOS 3.0
 		public override void OnActivated (UIApplication application)
 		{
+			var types = typeof(UIView).Assembly.GetTypes().Where(x=> x.IsSubclassOf(typeof(UIView)) && x.Namespace == "MonoTouch.UIKit").Select(x=> x.Name).Aggregate((current,next) => current + "," + next);
+			types.Split(new char[]{char.Parse(",")});
+			Console.WriteLine(types);
 		}
 	}
 }

@@ -68,7 +68,10 @@ namespace ClanceysLib
 		public static UIImage RemoveSharpEdges (UIImage image)
 		{
 			if (image == null)
+			{
+				Console.WriteLine("Remove sharp edges image is null");
 				throw new ArgumentNullException ("image");
+			}
 			
 			
 			UIGraphics.BeginImageContext (image.Size);

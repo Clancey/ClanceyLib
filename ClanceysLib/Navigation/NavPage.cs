@@ -37,7 +37,7 @@ namespace ClanceysLib
 					currentW = Padding;
 					currentH += rowsHeight + Padding;
 				}
-				Console.WriteLine(currentW + " : " + currentH);
+				//Console.WriteLine(currentW + " : " + currentH);
 				icon.parent = this;
 				icon.ColumnWidth = columnWidth;
 				icon.RowHeight = rowsHeight;

@@ -5,6 +5,7 @@ using MonoTouch.UIKit;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.CoreGraphics;
+using System.Threading;
 namespace ClanceysLib
 {
 	
@@ -28,6 +29,8 @@ namespace ClanceysLib
 		private UIButton button;
 		private UILabel label;
 		private NavIconBadge badge;
+		private MBProgressHUD loading;
+		public bool ShowLoadingMessage {get;set;}
 		
 		public int NotificationCount
 		{
@@ -39,15 +42,18 @@ namespace ClanceysLib
 		{
 			this.Frame = new RectangleF(0,0,0,0);
 			badge = new NavIconBadge();
-			badge.BadgeColor = UIColor.FromRGBA(129f, 0f, 0f, 1.000f);
-			
+			badge.TouchDown += delegate {				
+				loadModal();
+			};
+			//badge.BadgeColor = UIColor.FromRGBA(129f, 0f, 0f, 1.000f);
+			//loading.TitleText = "Loading";
 		}
 		
 		
 		public void Refresh(PointF location)
 		{
 			ClearView();
-			Console.WriteLine("refreshing " + this.Title);
+			//Console.WriteLine("refreshing " + this.Title);
 			var frame = this.Frame;
 			frame.Location = location;
 			frame.Height = RowHeight;
@@ -61,11 +67,11 @@ namespace ClanceysLib
 			
 			var x = (frame.Width - image.Size.Width) /2;
 			button = UIButton.FromType(UIButtonType.Custom);
-			Console.WriteLine("imageH :" + imageH);
-			Console.WriteLine("imageSize : " + image.Size);
-			Console.WriteLine("row : " + RowHeight);
+			//Console.WriteLine("imageH :" + imageH);
+			//Console.WriteLine("imageSize : " + image.Size);
+			//Console.WriteLine("row : " + RowHeight);
 			var y = (float)(Math.Round(imageH) - image.Size.Height);
-			Console.WriteLine("y:" + y);
+			//Console.WriteLine("y:" + y);
 			button.Frame = new RectangleF(x,y,image.Size.Width,image.Size.Width);
 			badge.SetLocation(new PointF(button.Frame.Width - badge.Frame.Width,y),false);
 			button.SetImage(Image,UIControlState.Normal);	
@@ -75,8 +81,7 @@ namespace ClanceysLib
 			//button.Layer.ShadowRadius = 3;
 			//button.Layer.ShadowOpacity = 0.5f;
 			button.TouchDown += delegate {
-				parent.parent.LaunchModal(ModalView == null ? null : ModalView());
-				
+				loadModal();
 			};
 			//button.SetImage(Graphics.AdjustImage(button.Frame, Image,CGBlendMode.Normal,UIColor.Blue),UIControlState.Highlighted);
 			
@@ -99,7 +104,35 @@ namespace ClanceysLib
 				view.RemoveFromSuperview();	
 			}
 		}
-
+		UIResponder modalview;
+		private void loadModal()
+		{
+			Thread thread = new Thread(loadOnThread);
+			thread.Start();
+		
+		}
+		private void loadOnThread()
+		{
+			using(new NSAutoreleasePool())
+			{
+				if(ShowLoadingMessage)
+				{
+					loading = new MBProgressHUD();
+					loading.Show(true);
+				}
+				modalview = ModalView == null ? null : ModalView();
+				InvokeOnMainThread(delegate {loadComplete();});
+			}
+		}
+		
+		private void loadComplete()
+		{
+		
+			parent.parent.LaunchModal(modalview);
+			if(ShowLoadingMessage)
+				loading.Hide(true);
+		}
+		
 		void HandleBtnTouchDown (object sender, EventArgs e)
 		{
 			

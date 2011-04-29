@@ -23,7 +23,7 @@ namespace ClanceysLib
 		private UIResponder topModal;
 		public UIBarButtonItem LeftButton;
 		public UIBarButtonItem RightButton;
-
+		public double AnimationSpeed = 0.3;
 
 		public NavLauncher () : base()
 		{
@@ -72,20 +72,55 @@ namespace ClanceysLib
 				AddViewToScreen (modal);
 			}
 			else if (responder is UIViewController)
-			{
-				var vc = responder as UIViewController;
-				AddViewToScreen (vc.View);
-				this.NavigationController.PushViewController ((UIViewController)topModal, false);
+			{					
+				AddViewControllerToScreen ();
 			}
 		}
 		bool Adding;
+		UIImageView tempImage;
+		private void AddViewControllerToScreen()
+		{
+			var vc = topModal as UIViewController;
+			UIGraphics.BeginImageContext(View.Frame.Size);
+			vc.View.Layer.RenderInContext(UIGraphics.GetCurrentContext());
+			UIImage test = UIGraphics.GetImageFromCurrentImageContext();
+			tempImage = new UIImageView(test);
+			UIGraphics.EndImageContext();
+			
+			MainView.AddSubview (tempImage);
+			tempImage.Transform = CGAffineTransform.MakeScale (0.2f, 0.2f);
+			tempImage.Alpha = 0.5f;
+			UIView.BeginAnimations ("addModel");
+			UIView.SetAnimationDuration (AnimationSpeed);
+			UIView.SetAnimationCurve(UIViewAnimationCurve.EaseOut);
+			UIView.SetAnimationDelegate (this);
+			tempImage.Alpha = 1;
+			tempImage.Transform = CGAffineTransform.MakeScale (1f, 1f);			
+			UIView.SetAnimationDidStopSelector (new Selector ("fadeInDidFinish"));
+			UIView.CommitAnimations ();
+		}
+		
+		[Export("fadeInDidFinish")]
+		public void FadeInDidFinish ()
+		{		
+			var vc = topModal as UIViewController;
+			NavigationController.PushViewController(vc,false);
+			tempImage.Transform = CGAffineTransform.MakeScale (1f, 1f);
+			tempImage.RemoveFromSuperview ();			
+			tempImage = null;
+			var leftButton = new UIBarButtonItem (UIImage.FromResource (GetType ().Assembly, "ClanceysLib.Images.Home.png"), UIBarButtonItemStyle.Bordered, delegate { CloseModal (); });
+			(topModal as UIViewController).NavigationItem.LeftBarButtonItem = leftButton;
+			Adding = false;
+		}
+		
 		private void AddViewToScreen (UIView modal)
 		{
 			MainView.AddSubview (modal);
 			modal.Transform = CGAffineTransform.MakeScale (0.2f, 0.2f);
 			modal.Alpha = 0.5f;
 			UIView.BeginAnimations ("addModel");
-			UIView.SetAnimationDuration (0.5);
+			UIView.SetAnimationDuration (AnimationSpeed);
+			UIView.SetAnimationCurve(UIViewAnimationCurve.EaseOut);
 			modal.Alpha = 1;
 			modal.Transform = CGAffineTransform.MakeScale (1f, 1f);
 			UIView.CommitAnimations ();
@@ -122,7 +157,8 @@ namespace ClanceysLib
 			tb.BecomeFirstResponder();
 			tb.ResignFirstResponder();
 			UIView.BeginAnimations ("closeModel");
-			UIView.SetAnimationDuration (0.5);
+			UIView.SetAnimationDuration (AnimationSpeed);
+			UIView.SetAnimationCurve(UIViewAnimationCurve.EaseIn);
 			UIView.SetAnimationDelegate (this);
 			UIView.SetAnimationDidStopSelector (new Selector ("fadeOutDidFinish"));
 			modal.Transform = CGAffineTransform.MakeScale (0.2f, 0.2f);
