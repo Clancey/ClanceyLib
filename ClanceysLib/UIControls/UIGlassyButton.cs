@@ -64,7 +64,7 @@ namespace ClanceysLib
 			Layer.AddSublayer(shineLayer);
 		
 			VerticalAlignment = UIControlContentVerticalAlignment.Center;
-			Font = UIFont.BoldSystemFontOfSize (17);
+			Font = UIFont.BoldSystemFontOfSize (15f);
 			SetTitle (Title, UIControlState.Normal);
 			SetTitleColor (UIColor.White, UIControlState.Normal);
 			

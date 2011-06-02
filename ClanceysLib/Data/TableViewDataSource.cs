@@ -66,7 +66,7 @@ namespace ClanceysLib
 
 			else
 			{
-				return getPropertyArray (this.dataArray[section], CellSubsections).Count ();
+				return Util.GetPropertyArray (this.dataArray[section], CellSubsections).Count ();
 			}
 		}
 
@@ -75,7 +75,7 @@ namespace ClanceysLib
 		/// </summary>
 		public override string TitleForHeader (UITableView tableView, int section)
 		{
-			return this.getPropertyValue (this.dataArray[section], CellSectionHeader);
+			return Util.GetPropertyValue (this.dataArray[section], CellSectionHeader);
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace ClanceysLib
 		/// </summary>
 		public override string TitleForFooter (UITableView tableView, int section)
 		{
-			return this.getPropertyValue (this.dataArray[section], CellSectionFooter);
+			return Util.GetPropertyValue (this.dataArray[section], CellSectionFooter);
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
@@ -101,15 +101,15 @@ namespace ClanceysLib
 
 			else
 			{
-				l = getPropertyArray (dataArray[indexPath.Section], CellSubsections).ElementAt (indexPath.Row);
+				l = Util.GetPropertyArray (dataArray[indexPath.Section], CellSubsections).ElementAt (indexPath.Row);
 			}
 			
 			if (cell.TextLabel != null)
-				cell.TextLabel.Text = getPropertyValue (l, CellTextLabelMember);
+				cell.TextLabel.Text = Util.GetPropertyValue (l, CellTextLabelMember);
 			
 			if (cell.DetailTextLabel != null)
 			{
-				cell.DetailTextLabel.Text = getPropertyValue (l, CellDetailTextLabelMember);
+				cell.DetailTextLabel.Text = Util.GetPropertyValue (l, CellDetailTextLabelMember);
 				//cell.DetailTextLabel.BackgroundColor = UIColor.Purple;
 			}
 			UIView bg = new UIView (cell.Frame);
@@ -119,41 +119,6 @@ namespace ClanceysLib
 			//cell.BackgroundColor = UIColor.Purple;
 			return cell;
 		}
-
-		private string getPropertyValue (object inObject, string propertyName)
-		{
-			PropertyInfo[] props = inObject.GetType ().GetProperties ();
-			PropertyInfo prop = props.Select (p => p).Where (p => p.Name == propertyName).FirstOrDefault ();
-			if (prop != null)
-				return prop.GetValue (inObject, null).ToString ();
-			return "";
-		}
-		private object[] getPropertyArray (object inObject, string propertyName)
-		{
-			PropertyInfo[] props = inObject.GetType ().GetProperties ();
-			PropertyInfo prop = props.Select (p => p).Where (p => p.Name == propertyName).FirstOrDefault ();
-			if (prop != null)
-			{
-				var currentObject = prop.GetValue (inObject, null);
-				if (currentObject.GetType ().GetGenericTypeDefinition () == typeof(List<>))
-				{
-					return (new ArrayList ((IList)currentObject)).ToArray ();
-				}
-
-				else if (currentObject is Array)
-				{
-					return (object[])currentObject;
-				}
-				else
-				{
-					return new object[1];
-				}
-			}
-			return new object[1];
-		}
-		
-		
-		
 	}
 }
 

@@ -112,9 +112,29 @@ namespace ClanceysLib
 		#endregion
 
 		#region Rectangles
+		public static float AbsoluteWidth(this RectangleF orgRect)
+		{
+			return orgRect.X + orgRect.Width;	
+		}
+		public static float AbsoluteHeight(this RectangleF orgRect)
+		{
+			return orgRect.Y + orgRect.Height;	
+		}
+		
 		public static RectangleF SetLocation (this RectangleF orgRect, PointF point)
 		{
 			orgRect.Location = point;
+			return orgRect;
+		}
+		
+		public static RectangleF SetLocation (this RectangleF orgRect, float x,float y)
+		{
+			orgRect.Location = new PointF(x,y);
+			return orgRect;
+		}
+		public static RectangleF SetLocation (this RectangleF orgRect, SizeF point)
+		{
+			orgRect.Location = new PointF(point.Width,point.Height);
 			return orgRect;
 		}
 
@@ -179,6 +199,12 @@ namespace ClanceysLib
 		{
 			orgRect.Width += width;
 			orgRect.Height += height;
+			return orgRect;
+		}
+		public static RectangleF AddSize (this RectangleF orgRect, SizeF size)
+		{
+			orgRect.Width += size.Width;
+			orgRect.Height += size.Height;
 			return orgRect;
 		}
 

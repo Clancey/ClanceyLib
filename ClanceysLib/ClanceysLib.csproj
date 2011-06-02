@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,7 +34,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchDebug>False</MtouchDebug>
@@ -97,10 +97,56 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AdHoc|iPhoneSimulator' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\AdHoc</OutputPath>
+    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
     <WarningLevel>4</WarningLevel>
     <MtouchUseSGen>false</MtouchUseSGen>
     <MtouchDebug>False</MtouchDebug>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchArch>ARMv6</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Lite|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <MtouchSdkVersion>4.2</MtouchSdkVersion>
+    <ConsolePause>false</ConsolePause>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchArch>ARMv6</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Lite|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>ARMv6</MtouchArch>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchSdkVersion>4.2</MtouchSdkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore-Lite|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\AppStore-Lite</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchDebug>False</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
@@ -152,7 +198,6 @@
     <Compile Include="UIControls\MBProgressHUD.cs" />
     <Compile Include="MT.D\ButtonElement.cs" />
     <Compile Include="UIControls\UIGlassyButton.cs" />
-    <Compile Include="Data\SQLite.cs" />
     <Compile Include="MapKit\PolygonOverlay.cs" />
     <Compile Include="MapKit\PolylineOverlay.cs" />
     <Compile Include="MapKit\TileOverlay.cs" />
@@ -161,6 +206,8 @@
     <Compile Include="UIControls\UIHorizontalButton.cs" />
     <Compile Include="Navigation\DefaultLoadingView.cs" />
     <Compile Include="UIControls\HorizontalDividerView.cs" />
+    <Compile Include="UIControls\PIckerView.cs" />
+    <Compile Include="Utils\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />
@@ -169,16 +216,22 @@
     <Content Include="Images\Home%402x.png" />
     <Content Include="Images\SBBadgeBG.png" />
     <Content Include="Images\SBBadgeBG%402x.png" />
+    <Content Include="Images\closebox_pressed.png" />
+    <Content Include="Images\closebox.png" />
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="IPhone">
+        <Policies>
+          <StandardHeader inheritsSet="Apache2License" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
   <ItemGroup>
     <ProjectReference Include="..\..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
       <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
       <Name>MonoTouch.Dialog</Name>
     </ProjectReference>
   </ItemGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="IPhone" />
-    </MonoDevelop>
-  </ProjectExtensions>
 </Project>
