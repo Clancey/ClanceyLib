@@ -59,15 +59,6 @@ namespace ClanceySamples
 						},
 						new NavIcon()
 						{
-							Image = Images.More,
-							Title = "Grid Layout",
-							ModalView = delegate()
-							{
-								return new GridView(new RectangleF(100,100,100,100));	
-							}
-						},	
-						new NavIcon()
-						{
 							Image = Images.Most,
 							Title = "MT.D",
 							ModalView = delegate()

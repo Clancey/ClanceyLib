@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClanceySamples", "ClanceySa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoTouch.Dialog", "..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj", "{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xaml", "Xaml\Xaml.csproj", "{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -21,22 +19,6 @@ Global
 		AppStore|iPhoneSimulator = AppStore|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AdHoc|iPhone.ActiveCfg = Debug|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AdHoc|iPhone.Build.0 = Debug|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AdHoc|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AdHoc|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AppStore|iPhone.ActiveCfg = Debug|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AppStore|iPhone.Build.0 = Debug|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AppStore|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.AppStore|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Debug|iPhone.Build.0 = Debug|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Release|iPhone.ActiveCfg = Release|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Release|iPhone.Build.0 = Release|iPhone
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{0CF06F61-E63B-4D5E-B95F-E7458A9C2C7E}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{1CAB7615-CC07-4808-84CA-4A16A497660C}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{1CAB7615-CC07-4808-84CA-4A16A497660C}.Debug|iPhone.Build.0 = Debug|iPhone
 		{1CAB7615-CC07-4808-84CA-4A16A497660C}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator

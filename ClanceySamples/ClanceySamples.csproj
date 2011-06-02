@@ -102,7 +102,6 @@
     <Compile Include="Database.cs" />
     <Compile Include="StackPanelView.cs" />
     <Compile Include="DemoElementApi.cs" />
-    <Compile Include="GridView.cs" />
     <Compile Include="DataGrid.cs" />
   </ItemGroup>
   <ItemGroup>
