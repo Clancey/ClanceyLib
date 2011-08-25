@@ -60,10 +60,10 @@ namespace ClanceysLib
 			} 
 			public override void LayoutSubviews ()
 			{
-				base.LayoutSubviews ();
 				var frame = ContentView.Bounds.Add(new PointF(2,2),new SizeF(-4,-4));
 				
 				btn.Frame = frame;
+				base.LayoutSubviews ();
 			}
 			
 			public void UpdateFrom (ButtonElement element)

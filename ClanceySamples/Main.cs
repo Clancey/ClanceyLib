@@ -29,6 +29,8 @@ namespace ClanceySamples
 		{
 			// If you have defined a view, add it here:
 			// window.AddSubview (navigationController.View);
+			//var version = NSBundle.MainBundle.InfoDictionary.ObjectForKey(new NSString("CFBundleName")).ToString();
+			AppRater.AppLaunched("myappid");
 			var launcher = new NavLauncher ();
 			launcher.Pages = new List<NavPage>(){
 				new NavPage(3,3)

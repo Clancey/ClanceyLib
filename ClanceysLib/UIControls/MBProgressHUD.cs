@@ -31,7 +31,8 @@ namespace ClanceysLib
 		/** Progress is shown using an UIActivityIndicatorView. This is the default. */
 		Indeterminate,
 		/** Progress is shown using a MBRoundProgressView. */
-		Determinate
+		Determinate,
+		Custom
 	}
 
 	public class MBProgressHUD : UIView
@@ -93,8 +94,12 @@ namespace ClanceysLib
 		private bool TaskInProgress { get; set; }
 		private float GraceTime { get; set; }
 		private float MinShowTime { get; set; }
-		private UILabel Label { get; set; }
+		public UILabel Label { get; set; }
 		private UILabel DetailsLabel { get; set; }
+		public UIView CustomView {get;set;}
+		public UIColor RectangleColor{get;set;}
+		public UIColor RectangleBorderColor {get;set;}
+		public UIColor TextColor {get;set;}
 		private float _progress;
 		public float Progress {
 			get { return _progress; }
@@ -155,6 +160,12 @@ namespace ClanceysLib
 			var indicator = Indicator as MBRoundProgressView;
 			if (indicator != null) {
 				indicator.Progress = Progress;
+			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft)
+				Transform = CGAffineTransform.MakeRotation(ToRadians(90f));
+			else if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
+				Transform = CGAffineTransform.MakeRotation(ToRadians(-90f));
+			else if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown)
+				Transform = CGAffineTransform.MakeRotation(ToRadians(180f));
 			}
 		}
 
@@ -168,9 +179,11 @@ namespace ClanceysLib
 			
 			if (Mode == MBProgressHUDMode.Determinate) {
 				Indicator = new MBRoundProgressView ();
-			} else {
+			} else if(Mode == MBProgressHUDMode.Indeterminate) {
 				Indicator = new UIActivityIndicatorView (UIActivityIndicatorViewStyle.WhiteLarge);
 				((UIActivityIndicatorView)Indicator).StartAnimating ();
+			} else {
+				Indicator = CustomView;
 			}
 			
 			this.AddSubview (Indicator);
@@ -232,7 +245,9 @@ namespace ClanceysLib
 			// Transparent background
 			this.Opaque = false;
 			this.BackgroundColor = UIColor.Clear;
-			
+			this.RectangleColor = UIColor.Gray.ColorWithAlpha(Opacity);
+			this.RectangleBorderColor = RectangleColor;
+			TextColor = UIColor.White;
 			// Make invisible for now
 			this.Alpha = 0.0f;
 			
@@ -299,7 +314,7 @@ namespace ClanceysLib
 				Label.TextAlignment = UITextAlignment.Center;
 				Label.Opaque = false;
 				Label.BackgroundColor = UIColor.Clear;
-				Label.TextColor = UIColor.White;
+				Label.TextColor = TextColor;
 				Label.Text = this.TitleText;
 				
 				// Update HUD size
@@ -361,8 +376,18 @@ namespace ClanceysLib
 					this.AddSubview (DetailsLabel);
 				}
 			}
+			
+			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft)
+				Transform = CGAffineTransform.MakeRotation(ToRadians(90f));
+			else if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
+				Transform = CGAffineTransform.MakeRotation(ToRadians(-90f));
+			else if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown)
+				Transform = CGAffineTransform.MakeRotation(ToRadians(180f));
 		}
-		
+		private float ToRadians(float degrees)
+        {
+            return degrees * 0.01745329f;
+        }
 		private static IntPtr GetClassHandle (string clsName)
 		{
 			return (new Class(clsName)).Handle;
@@ -530,14 +555,27 @@ namespace ClanceysLib
 		{
 			float radius = 10.0f;
 			context.BeginPath ();
-			context.SetGrayFillColor (0.0f, this.Opacity);
+			//context.SetGrayFillColor (0.0f, this.Opacity);
 			context.MoveTo (rect.GetMinX () + radius, rect.GetMinY ());
 			context.AddArc (rect.GetMaxX () - radius, rect.GetMinY () + radius, radius, (float)(3 * Math.PI / 2), 0f, false);
 			context.AddArc (rect.GetMaxX () - radius, rect.GetMaxY () - radius, radius, 0, (float)(Math.PI / 2), false);
 			context.AddArc (rect.GetMinX () + radius, rect.GetMaxY () - radius, radius, (float)(Math.PI / 2), (float)Math.PI, false);
 			context.AddArc (rect.GetMinX () + radius, rect.GetMinY () + radius, radius, (float)Math.PI, (float)(3 * Math.PI / 2), false);
 			context.ClosePath ();
+			context.SetFillColorWithColor(this.RectangleColor.CGColor);		
 			context.FillPath ();
+			
+			context.SetStrokeColorWithColor(RectangleBorderColor.CGColor);	
+			context.BeginPath ();
+			//context.SetGrayFillColor (0.0f, this.Opacity);
+			context.MoveTo (rect.GetMinX () + radius, rect.GetMinY ());
+			context.AddArc (rect.GetMaxX () - radius, rect.GetMinY () + radius, radius, (float)(3 * Math.PI / 2), 0f, false);
+			context.AddArc (rect.GetMaxX () - radius, rect.GetMaxY () - radius, radius, 0, (float)(Math.PI / 2), false);
+			context.AddArc (rect.GetMinX () + radius, rect.GetMaxY () - radius, radius, (float)(Math.PI / 2), (float)Math.PI, false);
+			context.AddArc (rect.GetMinX () + radius, rect.GetMinY () + radius, radius, (float)Math.PI, (float)(3 * Math.PI / 2), false);
+			context.ClosePath ();
+		
+			context.StrokePath();
 		}
 		
 	}

@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using MonoTouch.UIKit;
 namespace ClanceysLib
 {
 	public static class Util
@@ -54,7 +55,27 @@ namespace ClanceysLib
 			}
 			return new object[1];
 		}
-		
+				
+		public static UIApplication MainApp = UIApplication.SharedApplication;
+		static object networkLock = new object ();
+		static int active;
+
+		public static void PushNetworkActive ()
+		{
+			lock (networkLock) {
+				active++;
+				MainApp.NetworkActivityIndicatorVisible = true;
+			}
+		}
+
+		public static void PopNetworkActive ()
+		{
+			lock (networkLock) {
+				active--;
+				if (active == 0)
+					MainApp.NetworkActivityIndicatorVisible = false;
+			}
+		}
 	}
 }
 

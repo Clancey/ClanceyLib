@@ -29,6 +29,9 @@ namespace ClanceysLib
 		TapableView closeView;
 		UIButton closeBtn;
 		public UIView ViewForPicker; 
+		public event EventHandler ValueChanged;
+		public event EventHandler PickerClosed;
+		public event EventHandler PickerShown;
 		public UIComboBox(RectangleF rect) : base (rect)
 		{
 			this.BorderStyle = UITextBorderStyle.RoundedRect;
@@ -40,7 +43,11 @@ namespace ClanceysLib
 				return false;	
 			};
 			pickerView.IndexChanged += delegate {
+				var oldValue = this.Text;
 				this.Text = pickerView.StringValue;	
+				if(ValueChanged!= null && oldValue != Text)
+					ValueChanged(this,null);
+					
 			};
 			closeBtn = new UIButton(new RectangleF(0,0,31,32));
 			closeBtn.SetImage(UIImage.FromFile("Images/closebox.png"),UIControlState.Normal);
@@ -74,27 +81,31 @@ namespace ClanceysLib
 			set {pickerView.DisplayMember = value;}
 		}
 		bool pickerVisible;
+		
 		public void ShowPicker()
 		{
+			if(PickerShown != null)
+				PickerShown(this,null);
+			LayoutSubviews ();
 			pickerView.BringSubviewToFront(closeBtn);
 			pickerVisible = true;
 			var parentView = ViewForPicker ?? this.Superview;
 			var parentFrame = parentView.Frame;
-			closeView = new TapableView(parentView.Bounds);
-			closeView.Tapped += delegate{
-				HidePicker();	
-			};
+			//closeView = new TapableView(parentView.Bounds);
+			//closeView.Tapped += delegate{
+			//	HidePicker();	
+			//};
 	
-			pickerView.Frame = pickerView.Frame.SetLocation(new PointF(0,parentFrame.Height));			
-			closeView.AddSubview(pickerView);
+			pickerView.Frame = pickerView.Frame.SetLocation(new PointF(0,parentFrame.Height));
 			
 			UIView.BeginAnimations("slidePickerIn");			
 			UIView.SetAnimationDuration(0.3);
 			UIView.SetAnimationDelegate(this);
 			UIView.SetAnimationDidStopSelector (new Selector ("fadeInDidFinish"));
-			parentView.AddSubview(closeView);
+			//parentView.AddSubview(closeView);			
+			parentView.AddSubview(pickerView);
 			var tb = new UITextField(new RectangleF(0,-100,15,25));
-			closeView.AddSubview(tb);
+			//closeView.AddSubview(tb);
 			tb.BecomeFirstResponder();
 			tb.ResignFirstResponder();
 			tb.RemoveFromSuperview();
@@ -107,6 +118,8 @@ namespace ClanceysLib
 		bool isHiding;
 		public void HidePicker()
 		{
+			if(PickerClosed!=null)
+				PickerClosed(this,null);
 			if(isHiding)
 				return;
 			isHiding = true;
@@ -118,7 +131,7 @@ namespace ClanceysLib
 			UIView.SetAnimationDelegate(this);
 			UIView.SetAnimationDidStopSelector (new Selector ("fadeOutDidFinish"));
 			pickerView.Frame = pickerView.Frame.SetLocation(new PointF(0,parentH));
-			UIView.CommitAnimations();	
+			UIView.CommitAnimations();
 		}
 		
 		public object SelectedItem {
@@ -129,7 +142,7 @@ namespace ClanceysLib
 		public void FadeOutDidFinish ()
 		{
 			pickerView.RemoveFromSuperview();
-			closeView.RemoveFromSuperview();
+			//closeView.RemoveFromSuperview();
 			pickerVisible = false;
 			isHiding = false;
 		}
@@ -137,6 +150,7 @@ namespace ClanceysLib
 		public void FadeInDidFinish ()
 		{
 			pickerView.BecomeFirstResponder();
+			pickerView.BringSubviewToFront(closeBtn);
 		}
 		
 	}
@@ -186,7 +200,6 @@ namespace ClanceysLib
 		public event EventHandler IndexChanged;
 	}
 	
-
 	public class PickerData : UIPickerViewModel
 	{	
 		PickerView Picker;

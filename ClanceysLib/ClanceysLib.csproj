@@ -11,7 +11,8 @@
     <RootNamespace>ClanceysLib</RootNamespace>
     <AssemblyName>ClanceysLib</AssemblyName>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <MtouchSdkVersion>4.2</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +25,6 @@
     <MtouchDebug>True</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseArmv7>false</MtouchUseArmv7>
     <MtouchUseThumb>false</MtouchUseThumb>
@@ -40,7 +40,6 @@
     <MtouchDebug>False</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseArmv7>false</MtouchUseArmv7>
     <MtouchUseThumb>false</MtouchUseThumb>
@@ -58,7 +57,6 @@
     <MtouchDebug>True</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseArmv7>false</MtouchUseArmv7>
     <MtouchUseThumb>false</MtouchUseThumb>
@@ -74,81 +72,10 @@
     <MtouchDebug>False</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseArmv7>false</MtouchUseArmv7>
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchArch>ARMv6</MtouchArch>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AdHoc|iPhone' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\AdHoc</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <MtouchDebug>False</MtouchDebug>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchUseThumb>false</MtouchUseThumb>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchArch>ARMv6</MtouchArch>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AdHoc|iPhoneSimulator' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchUseThumb>false</MtouchUseThumb>
-    <MtouchArch>ARMv6</MtouchArch>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Lite|iPhoneSimulator' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <MtouchLink>None</MtouchLink>
-    <MtouchDebug>True</MtouchDebug>
-    <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
-    <ConsolePause>false</ConsolePause>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchUseThumb>false</MtouchUseThumb>
-    <MtouchArch>ARMv6</MtouchArch>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-Lite|iPhone' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchUseThumb>false</MtouchUseThumb>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <ConsolePause>false</ConsolePause>
-    <MtouchArch>ARMv6</MtouchArch>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchSdkVersion>4.2</MtouchSdkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore-Lite|iPhone' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\AppStore-Lite</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchDebug>False</MtouchDebug>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
   </PropertyGroup>
   <ItemGroup>
@@ -186,7 +113,6 @@
     <Compile Include="Navigation\NavIcon.cs" />
     <Compile Include="UIControls\TapableView.cs" />
     <Compile Include="Utils\ObjectFactory.cs" />
-    <Compile Include="AddressBook\AddressBook.cs" />
     <Compile Include="Data\ObservableCollection.cs" />
     <Compile Include="Data\NotifyCollectionChangedEventHandler.cs" />
     <Compile Include="Data\NotifyCollectionChangedEventArgs.cs" />
@@ -196,7 +122,6 @@
     <Compile Include="Layout\DatagridAttributes.cs" />
     <Compile Include="Layout\UIDataGridView.cs" />
     <Compile Include="UIControls\MBProgressHUD.cs" />
-    <Compile Include="MT.D\ButtonElement.cs" />
     <Compile Include="UIControls\UIGlassyButton.cs" />
     <Compile Include="MapKit\PolygonOverlay.cs" />
     <Compile Include="MapKit\PolylineOverlay.cs" />
@@ -206,8 +131,12 @@
     <Compile Include="UIControls\UIHorizontalButton.cs" />
     <Compile Include="Navigation\DefaultLoadingView.cs" />
     <Compile Include="UIControls\HorizontalDividerView.cs" />
-    <Compile Include="UIControls\PIckerView.cs" />
     <Compile Include="Utils\Util.cs" />
+    <Compile Include="UIControls\UIComboBox.cs" />
+    <Compile Include="AddressBook\AddressBook.cs" />
+    <Compile Include="MT.D\ButtonElement.cs" />
+    <Compile Include="MT.D\ComboBoxElement.cs" />
+    <Compile Include="AppStore\AppRater.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />
@@ -221,9 +150,9 @@
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="IPhone">
+      <Properties>
         <Policies>
-          <StandardHeader inheritsSet="Apache2License" />
+          <StandardHeader Text="&#xA; Copyright ${Year}  ${CopyrightHolder}&#xA;&#xA;   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);&#xA;   you may not use this file except in compliance with the License.&#xA;   You may obtain a copy of the License at&#xA;&#xA;       http://www.apache.org/licenses/LICENSE-2.0&#xA;&#xA;   Unless required by applicable law or agreed to in writing, software&#xA;   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,&#xA;   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.&#xA;   See the License for the specific language governing permissions and&#xA;   limitations under the License." IncludeInNewFiles="True" />
         </Policies>
       </Properties>
     </MonoDevelop>
