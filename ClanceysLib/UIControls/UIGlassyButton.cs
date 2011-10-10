@@ -13,7 +13,8 @@ namespace ClanceysLib
 	{
 		private bool _Initialized;
 
-		public UIColor Color { get; set; }		
+		public UIColor Color { get; set; }	
+		public UIColor TitleColor {get;set;}
 		public UIColor HighlightColor { get; set; }
 
 		public string _Title = string.Empty;
@@ -36,6 +37,8 @@ namespace ClanceysLib
 		
 		public void Init(RectangleF rect)
 		{
+			if(TitleColor == null)
+				TitleColor = UIColor.White;
 			Layer.MasksToBounds = true;
 			Layer.CornerRadius = 8;
 			
@@ -66,7 +69,7 @@ namespace ClanceysLib
 			VerticalAlignment = UIControlContentVerticalAlignment.Center;
 			Font = UIFont.BoldSystemFontOfSize (15f);
 			SetTitle (Title, UIControlState.Normal);
-			SetTitleColor (UIColor.White, UIControlState.Normal);
+			SetTitleColor (TitleColor, UIControlState.Normal);
 			
 			_Initialized = true;
 		}
@@ -93,7 +96,7 @@ namespace ClanceysLib
 				
 			}
 			
-			highlightLayer.Hidden = !Highlighted;
+			highlightLayer.Hidden = true;
 		}
 		
 		public override bool BeginTracking(UITouch uitouch, UIEvent uievent)

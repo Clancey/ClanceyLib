@@ -21,7 +21,7 @@ namespace ClanceysLib
 	{
 		static NSUserDefaults settings = new NSUserDefaults("appRater");
 		public static int RunCountNeeded = 5;
-		public static int DaysInstalledCountNeeded = 3;
+		public static int DaysInstalledCountNeeded = 1;
 		static string url =  @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=" + AppId;
 		static string AppId = "";
 		public static void AppLaunched(string appId)
@@ -39,6 +39,11 @@ namespace ClanceysLib
 			Console.WriteLine("runcount" + RunCount);
 			
 			
+		}
+		public static void DidSomethingSignificant()
+		{
+			TryToRate();
+			RunCount += 1;
 		}
 		static void ResetWarningIndicators()
 		{
@@ -76,11 +81,13 @@ namespace ClanceysLib
 		}
 		public static void Rate()
 		{
+			isRating = true;
 			var version = NSBundle.MainBundle.InfoDictionary.ObjectForKey(new NSString("CFBundleVersion"));
 			
 			var name = NSBundle.MainBundle.InfoDictionary.ObjectForKey(new NSString("CFBundleName")).ToString();
 			var alert = new UIAlertView("Rate " + name,"If you enjoyed using " + name +". Will you please take a moment to rate it? Thanks for your support",null,"No, Thanks", "Rate " + name,"Remind Me Later");
 			alert.Clicked += delegate(object sender, UIButtonEventArgs e) {
+				isRating = false;
 				if(e.ButtonIndex == 0)
 					ShouldRateThisVersion = false;
 				else if(e.ButtonIndex == 1)
@@ -93,8 +100,11 @@ namespace ClanceysLib
 			};
 			alert.Show();
 		}
+		static bool isRating = false;
 		static bool ShouldRate()
 		{
+			if(isRating)
+				return false;
 			if(DidRate)
 				return false;
 			if(!ShouldRateThisVersion)

@@ -11,6 +11,7 @@ namespace ClanceysLib
 		public UITextAlignment Alignment = UITextAlignment.Center;
 		public event NSAction Tapped;
 		public UIColor Color;
+		public UIColor TitleColor;
 		public ButtonElement (string caption,UIColor color) : base (caption)
 		{
 			Color = color;
@@ -51,6 +52,7 @@ namespace ClanceysLib
 				this.BackgroundColor = UIColor.Clear;
 				btn = new UIGlassyButton(RectangleF.Empty);
 				btn.Color = parent.Color;
+				btn.TitleColor = parent.TitleColor;
 				btn.Title = element.Caption;
 				btn.TouchUpInside += delegate{
 					if(parent.Tapped != null)
