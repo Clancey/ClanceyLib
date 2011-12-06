@@ -60,6 +60,7 @@ namespace ClanceysLib
 		private NSTimer MinShowTimer { get; set; }
 		private DateTime? ShowStarted { get; set; }
 		private MBProgressHUDMode? _mode;
+		private bool canCancel = false;
 		public MBProgressHUDMode Mode {
 			get {
 				if (!_mode.HasValue) {
@@ -95,6 +96,7 @@ namespace ClanceysLib
 		private float GraceTime { get; set; }
 		private float MinShowTime { get; set; }
 		public UILabel Label { get; set; }
+		public UIButton CancelButton {get;set;}
 		private UILabel DetailsLabel { get; set; }
 		public UIView CustomView {get;set;}
 		public UIColor RectangleColor{get;set;}
@@ -141,6 +143,23 @@ namespace ClanceysLib
 					EnsureInvokedOnMainThread (() =>
 					{
 						DetailsLabel.Text = _detailText;
+						SetNeedsLayout ();
+						SetNeedsDisplay ();
+					});
+				}
+			}
+		}
+		
+		private string cancelButtonText;
+		public string CancelButtonText {
+
+			get { return cancelButtonText; }
+			set {
+				if (cancelButtonText != value) {
+					cancelButtonText = value;
+					EnsureInvokedOnMainThread (() =>
+					{
+						CancelButton.SetTitle(cancelButtonText,UIControlState.Normal);
 						SetNeedsLayout ();
 						SetNeedsDisplay ();
 					});
@@ -204,6 +223,11 @@ namespace ClanceysLib
 		public MBProgressHUD () : this(UIApplication.SharedApplication.KeyWindow)
 		{
 		}
+		
+		public MBProgressHUD (bool cancelable)
+		{
+			canCancel = cancelable;	
+		}
 
 		public MBProgressHUD (UIWindow window) : base(window.Bounds)
 		{
@@ -229,6 +253,8 @@ namespace ClanceysLib
 			
 			// Add details label
 			DetailsLabel = new UILabel (this.Bounds);
+			
+			CancelButton = new UIButton(this.Bounds);
 			
 			this.TitleText = null;
 			this.DetailText = null;
@@ -359,7 +385,7 @@ namespace ClanceysLib
 					if (this.Width < lWidth) {
 						this.Width = lWidth + 2 * MARGIN;
 					}
-					this.Height = this.Height + lHeight + PADDING;
+					this.Height += lHeight + PADDING;
 					
 					// Move indicator to make room for the new label
 					indFrame = new RectangleF (indFrame.Location.X, indFrame.Location.Y - ((float)Math.Floor (lHeight / 2 + PADDING / 2)), indFrame.Width, indFrame.Height);
@@ -376,6 +402,7 @@ namespace ClanceysLib
 					this.AddSubview (DetailsLabel);
 				}
 			}
+			
 			
 			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft)
 				Transform = CGAffineTransform.MakeRotation(ToRadians(90f));

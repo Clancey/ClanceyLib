@@ -143,6 +143,11 @@ namespace ClanceysLib
 			orgRect.Size = size;
 			return orgRect;
 		}
+		public static RectangleF SetSize (this RectangleF orgRect, float width,float height)
+		{
+			orgRect.Size = new SizeF(width,height);;
+			return orgRect;
+		}
 		
 		public static RectangleF SetHeight (this RectangleF orgRect, int height)
 		{

@@ -21,7 +21,7 @@ namespace ClanceysLib
 	{
 		static NSUserDefaults settings = new NSUserDefaults("appRater");
 		public static int RunCountNeeded = 5;
-		public static int DaysInstalledCountNeeded = 1;
+		public static int DaysInstalledCountNeeded = 2;
 		static string url =  @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=" + AppId;
 		static string AppId = "";
 		public static void AppLaunched(string appId)

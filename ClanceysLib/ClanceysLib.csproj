@@ -71,7 +71,6 @@
     <Folder Include="Utils\" />
     <Folder Include="AppStore\" />
     <Folder Include="Data\" />
-    <Folder Include="Utils\" />
     <Folder Include="MapKit\" />
     <Folder Include="Navigation\" />
     <Folder Include="Layout\" />
@@ -117,6 +116,7 @@
     <Compile Include="MT.D\ButtonElement.cs" />
     <Compile Include="MT.D\ComboBoxElement.cs" />
     <Compile Include="AppStore\AppRater.cs" />
+    <Compile Include="UIControls\MyMoviePlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />
