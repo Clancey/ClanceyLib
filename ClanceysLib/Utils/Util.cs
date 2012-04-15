@@ -20,6 +20,10 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using MonoTouch.UIKit;
+using System.Runtime.InteropServices;
+using MonoTouch.Foundation;
+
+
 namespace ClanceysLib
 {
 	public static class Util
@@ -76,6 +80,37 @@ namespace ClanceysLib
 					MainApp.NetworkActivityIndicatorVisible = false;
 			}
 		}
+
+		
+		public static UIImage FromResource (Assembly assembly, string name)
+		{
+			if (name == null)
+				throw new ArgumentNullException ("name");
+			assembly = Assembly.GetCallingAssembly ();
+			var stream = assembly.GetManifestResourceStream (name);
+			if (stream == null)
+				return null;
+			
+			IntPtr buffer = Marshal.AllocHGlobal ((int) stream.Length);
+			if (buffer == IntPtr.Zero)
+				return null;
+			
+			var copyBuffer = new byte [Math.Min (1024, (int) stream.Length)];
+			int n;
+			IntPtr target = buffer;
+			while ((n = stream.Read (copyBuffer, 0, copyBuffer.Length)) != 0){
+				Marshal.Copy (copyBuffer, 0, target, n);
+				target = (IntPtr) ((int) target + n);
+			}
+			try {
+				var data = NSData.FromBytes (buffer, (uint) stream.Length);
+				return UIImage.LoadFromData (data);
+			} finally {
+				Marshal.FreeHGlobal (buffer);
+				stream.Dispose ();
+			}
+		}
+	
 	}
 }
 

@@ -19,12 +19,12 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 namespace ClanceysLib
 {
-	public class ComboBoxElement: EntryElement
+	public class ComboBoxElement: StringElement
 	{
 		NSString key =new NSString( "UIComboBoxElement");
 		protected UIComboBox ComboBox;
 		
-		public ComboBoxElement (string caption, object[] Items , string DisplayMember) : base (caption,"","") 
+		public ComboBoxElement (string caption, object[] Items , string DisplayMember) : base (caption,"") 
 		{
 			this.ComboBox = new UIComboBox(RectangleF.Empty);
 			this.ComboBox.Items = Items;
@@ -38,7 +38,6 @@ namespace ClanceysLib
 				Value = ComboBox.Text;
 			};
 			Value = ComboBox.Text;
-			this.TextAlignment = UITextAlignment.Center;
 		}
 		private DialogViewController Dvc;
 		private UIBarButtonItem oldRightBtn;
@@ -47,12 +46,11 @@ namespace ClanceysLib
 		{
 			Dvc = dvc;
 			base.Selected (dvc, tableView, path);
-			entry.ResignFirstResponder();
 			ComboBox.ShowPicker();
 			if(dvc.NavigationItem.RightBarButtonItem != doneButton)
 				oldRightBtn = dvc.NavigationItem.RightBarButtonItem;
 			if(doneButton == null)
-				doneButton = new UIBarButtonItem("Done",UIBarButtonItemStyle.Bordered, delegate{
+				doneButton = new UIBarButtonItem("Done",UIBarButtonItemStyle.Done, delegate{
 					ComboBox.HidePicker();	
 					dvc.NavigationItem.RightBarButtonItem = oldRightBtn;
 				});
@@ -65,10 +63,12 @@ namespace ClanceysLib
 			ComboBox.HidePicker();
 		}
 		
-		public override UITableViewCell GetCell (DialogViewController dvc, UITableView tv)
+		public override UITableViewCell GetCell (UITableView tv)
 		{
-			ComboBox.ViewForPicker = dvc.View.Superview;
-			return base.GetCell (dvc, tv);
+			ComboBox.ViewForPicker = tv.Superview;
+			var cell = base.GetCell (tv);
+			cell.DetailTextLabel.TextAlignment = UITextAlignment.Center;
+			return cell;
 		}
 		
 	}

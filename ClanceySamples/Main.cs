@@ -8,6 +8,7 @@ using ClanceysLib;
 using System.Drawing;
 using MonoTouch.Dialog;
 using System.Reflection;
+using MonoTouch.MediaPlayer;
 
 namespace ClanceySamples
 {
@@ -77,6 +78,21 @@ namespace ClanceySamples
 								return new DataGrid(this.window.Frame);	
 							}
 							
+						},
+						new NavIcon()
+						{
+							Image = Images.Recent,
+							Title = "Play movie",
+							ModalView = delegate()
+							{
+								MPMoviePlayerController mp = new MPMoviePlayerController(new NSUrl("http://content.mp3tunes.com/storage/lockerplay/be266176d810daf35bdc2cc6469da98c/?sid=92ba9ce91039f0e2b1d46bbd3d0714cb&partner_token=1159283925"));
+								mp.ShouldAutoplay = true;
+								mp.Fullscreen = true;
+								return mp.View;
+								//moviePlayer.Play();
+								//return moviePlayer;
+								
+							}
 						}
 					}
 				},

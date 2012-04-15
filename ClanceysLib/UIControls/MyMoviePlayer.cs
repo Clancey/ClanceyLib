@@ -69,6 +69,8 @@ namespace ClanceysLib
 	        mp.View.Frame = this.Bounds;		
 			mp.SetFullscreen(true,true);
 			this.AddSubview(mp.View);	
+			
+			mp.Play();
 		}
 
 		private void WillExitFullScreen( NSNotification notification)

@@ -7,12 +7,12 @@ namespace ClanceysLib
 		MBProgressHUD loading;
 		public DefaultLoadingView ()
 		{
-			loading = new MBProgressHUD();
-			loading.TitleText = "Loading";
+			//loading = new MBProgressHUD();
+			//loading.TitleText = "Loading";
 		}
 		public override void ViewDidLoad ()
 		{
-			loading.Show(false);
+			//loading.Show(false);
 		}
 	}
 }

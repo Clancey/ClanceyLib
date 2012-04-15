@@ -2,11 +2,15 @@ using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using MonoTouch;
+using System.Drawing;
+using MonoTouch.CoreGraphics;
+
+
 namespace ClanceysLib
 {
 
 	[Register("RotatingViewController")]
-	public abstract partial class RotatingViewController : UIViewController
+	public partial class RotatingViewController : UIViewController
 	{
 		public NSObject notificationObserver;
 
@@ -33,10 +37,6 @@ namespace ClanceysLib
 		private void initialize ()
 		{
 		}
-
-		public UIViewController LandscapeLeftViewController { get; set; }
-		public UIViewController LandscapeRightViewController { get; set; }
-		public UIViewController PortraitViewController { get; set; }
 		public UIView PortraitView { get; set; }
 		public UIView LandscapeLeftView { get; set; }
 		public UIView LandscapeRightView { get; set; }
@@ -56,8 +56,9 @@ namespace ClanceysLib
 		private void _showView (UIView view)
 		{
 			_removeAllViews ();
-			view.Frame = View.Frame;
+			//view.Frame = View.Frame;
 			View.AddSubview (view);
+			//View = view;
 		}
 
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
@@ -69,20 +70,32 @@ namespace ClanceysLib
 			return false;
 		}
 
-		public abstract void SetupNavBar ();
+		public virtual void SetupNavBar ()
+		{
+			
+		}
 
 		private void SetView ()
 		{
 			//Console.WriteLine(InterfaceOrientation);
-			switch (InterfaceOrientation) {
+			var rect = this.View.Bounds;
+			rect.Location = PointF.Empty;
+			switch (UIApplication.SharedApplication.StatusBarOrientation) {
 			case UIInterfaceOrientation.Portrait:
+				PortraitView.Frame = rect;
 				_showView (PortraitView);
 				break;
 			
 			case UIInterfaceOrientation.LandscapeLeft:
+				//rect = CGAffineTransform.CGRectApplyAffineTransform (rect, CGAffineTransform.MakeRotation ((float)(90f * Math.PI / 180f)));
+				//rect.Location = PointF.Empty;
+				LandscapeLeftView.Frame = rect;
 				_showView (LandscapeLeftView);
 				break;
 			case UIInterfaceOrientation.LandscapeRight:
+				//rect = CGAffineTransform.CGRectApplyAffineTransform (rect, CGAffineTransform.MakeRotation ((float)(90f * Math.PI / 180f)));
+				//rect.Location = PointF.Empty;
+				LandscapeRightView.Frame = rect;
 				_showView (LandscapeRightView);
 				break;
 			}

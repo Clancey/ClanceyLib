@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\AllRecalls2\AllRecalls2\bin</OutputPath>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -64,6 +64,7 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="OpenTK" />
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -75,8 +76,9 @@
     <Folder Include="Navigation\" />
     <Folder Include="Layout\" />
     <Folder Include="AddressBook\" />
-    <Folder Include="MT.D\" />
     <Folder Include="Xaml\" />
+    <Folder Include="Calendar\" />
+    <Folder Include="Images\calendar\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIControls\ScrollViewWithHeader.cs" />
@@ -113,13 +115,40 @@
     <Compile Include="Utils\Util.cs" />
     <Compile Include="UIControls\UIComboBox.cs" />
     <Compile Include="AddressBook\AddressBook.cs" />
-    <Compile Include="MT.D\ButtonElement.cs" />
-    <Compile Include="MT.D\ComboBoxElement.cs" />
     <Compile Include="AppStore\AppRater.cs" />
     <Compile Include="UIControls\MyMoviePlayer.cs" />
+    <Compile Include="MT.D\ButtonElement.cs" />
+    <Compile Include="MT.D\ComboBoxElement.cs" />
+    <Compile Include="MT.D\CalendarElement.cs" />
+    <Compile Include="Calendar\CalendarMonthView.cs" />
+    <Compile Include="Calendar\CalendarMonthViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Home.png" />
+    <EmbeddedResource Include="Images\calendar\datecell.png">
+      <LogicalName>datecell.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\datecellselected.png">
+      <LogicalName>datecellselected.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\leftarrow.png">
+      <LogicalName>leftarrow.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\rightarrow.png">
+      <LogicalName>rightarrow.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\shadow.png">
+      <LogicalName>shadow.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\today.png">
+      <LogicalName>today.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\todayselected.png">
+      <LogicalName>todayselected.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\calendar\topbar.png">
+      <LogicalName>topbar.png</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Home%402x.png" />
@@ -137,12 +166,6 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <ProjectReference Include="..\..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
-      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
-      <Name>MonoTouch.Dialog</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
   </ItemGroup>

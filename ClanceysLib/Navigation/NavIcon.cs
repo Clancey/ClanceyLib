@@ -117,8 +117,8 @@ namespace ClanceysLib
 			{
 				if(ShowLoadingMessage)
 				{
-					loading = new MBProgressHUD();
-					loading.Show(true);
+					//loading = new MBProgressHUD(Util);
+					//loading.Show(true);
 				}
 				// UIKit Consistency error: you are calling a UIKit method that can only be invoked from the UI thread.
 				//modalview = ModalView == null ? null : ModalView();

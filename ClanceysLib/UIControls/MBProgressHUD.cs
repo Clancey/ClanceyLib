@@ -219,10 +219,6 @@ namespace ClanceysLib
 		#endregion
 
 		#region Lifecycle methods
-
-		public MBProgressHUD () : this(UIApplication.SharedApplication.KeyWindow)
-		{
-		}
 		
 		public MBProgressHUD (bool cancelable)
 		{
@@ -403,7 +399,7 @@ namespace ClanceysLib
 				}
 			}
 			
-			
+			Transform = CGAffineTransform.MakeIdentity();			
 			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft)
 				Transform = CGAffineTransform.MakeRotation(ToRadians(90f));
 			else if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)

@@ -2,6 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 namespace ClanceysLib
 {
 
@@ -26,14 +27,16 @@ namespace ClanceysLib
 */
 	public class StackPanel : UIView
 	{
-		public float padding = 10;
+		public float Padding {get;set;}
 		public bool StretchWidth { get; set; }
+		public bool CenterItems {get;set;}
 		public UIScrollView ParentScrollView {get;set;}
+		
 
-		public StackPanel (RectangleF rect)
+		public StackPanel (RectangleF rect) : base (rect)
 		{
-			this.Frame = rect;
-			this.Bounds = rect;
+			StretchWidth = true;
+			Padding = 5;
 		}
 		
 		public StackPanel (IntPtr handle) : base(handle)
@@ -41,35 +44,37 @@ namespace ClanceysLib
 
 		}
 		
-		public override void SubviewAdded (UIView uiview)
+		public StackPanel () : base()
 		{
-			base.SubviewAdded (uiview);
-			Redraw();
-		}
-		public override void WillRemoveSubview (UIView uiview)
-		{
-			base.WillRemoveSubview (uiview);
-			Redraw();
+			StretchWidth = true;	
+			Padding = 5;	
 		}
 
-
-		public void Redraw ()
+		public override void LayoutSubviews ()
 		{
-			float lastY = this.Frame.Y + padding;
+			float lastY = this.Bounds.Y + Padding;
 			float maxWidth = 0;
+			if(CenterItems)
+			{
+				var totalHeight = Subviews.Sum(x=> x.Frame.Height + Padding) - Padding;
+				if(totalHeight < Bounds.Height)
+				{
+					lastY = (Bounds.Height - totalHeight)/2;
+				}
+			}
 			
 			foreach (var view in Subviews)
 			{
 				var rect = view.Frame;
 				if (StretchWidth)
-					rect.Width = this.Frame.Width - (padding * 2);
-				rect.X = padding + this.Frame.X;
+					rect.Width = this.Bounds.Width - (Padding * 2);
+				rect.X = Padding + this.Bounds.X;
 				rect.Y = lastY;
 				
 				view.Frame = rect;
 				if(maxWidth < rect.Width)
 					maxWidth = rect.Width;
-				lastY += rect.Height + padding;
+				lastY += rect.Height + Padding;
 			}
 			if(ParentScrollView != null)
 				ParentScrollView.ContentSize = new SizeF(maxWidth,lastY);

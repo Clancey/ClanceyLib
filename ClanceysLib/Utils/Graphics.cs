@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using System.Drawing;
 using MonoTouch.CoreGraphics;
 using MonoTouch.CoreAnimation;
+using MonoTouch.ObjCRuntime;
 namespace ClanceysLib
 {
 	public class Graphics
@@ -39,7 +40,19 @@ namespace ClanceysLib
 				}
 			}
 		}
-
+		static Selector sscale;
+		public static void ConfigLayerHighRes (CALayer layer)
+		{
+			if (!HighRes)
+				return;
+			
+			if (sscale == null)
+				sscale = new Selector ("setContentsScale:");
+			
+			Messaging.void_objc_msgSend_float (layer.Handle, sscale.Handle, 2.0f);
+		}
+		
+		
 		public static UIImage ResizeImage (SizeF size, UIImage image, bool KeepRatio)
 		{
 			var curSize = image.Size;

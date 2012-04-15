@@ -22,7 +22,7 @@ namespace ClanceysLib
 			Tapped += tapped;
 		}
 				
-		public override UITableViewCell GetCell (DialogViewController dvc,UITableView tv)
+		public override UITableViewCell GetCell (UITableView tv)
 		{
 			var cell = tv.DequeueReusableCell (skey) as ButtonCellView;
 			if (cell == null)
