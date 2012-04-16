@@ -27,7 +27,11 @@ using MonoTouch.Foundation;
 namespace ClanceysLib
 {
 	public static class Util
-	{
+	{	
+		public static UIApplication MainApp = UIApplication.SharedApplication;
+		static object networkLock = new object ();
+		static int active;
+			
 		public static string GetPropertyValue (object inObject, string propertyName)
 		{
 			PropertyInfo[] props = inObject.GetType ().GetProperties ();
@@ -36,6 +40,7 @@ namespace ClanceysLib
 				return prop.GetValue (inObject, null).ToString ();
 			return "";
 		}
+		
 		public static object[] GetPropertyArray (object inObject, string propertyName)
 		{
 			PropertyInfo[] props = inObject.GetType ().GetProperties ();
@@ -59,10 +64,6 @@ namespace ClanceysLib
 			}
 			return new object[1];
 		}
-				
-		public static UIApplication MainApp = UIApplication.SharedApplication;
-		static object networkLock = new object ();
-		static int active;
 
 		public static void PushNetworkActive ()
 		{

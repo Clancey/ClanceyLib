@@ -21,6 +21,7 @@ using System.Collections.Generic;
 
 namespace ClanceysLib
 {
+	
 	public class CalendarDateTimeElement : StringElement {
 		public enum PickerTypes {
 			DatePicker,Calendar	
@@ -54,12 +55,13 @@ namespace ClanceysLib
 		public CalendarMonthView calView;
 		private UIBarButtonItem leftOld;
 		private UIBarButtonItem rightOld;
-		private UIBarButtonItem switchButon;
+		private UIBarButtonItem switchButton;
 		private UIBarButtonItem doneButton;
 		public bool DisableSwitching;
 		public NSAction DoneEditing;
 		public DateSelected OnDateSelected;
 		public bool closeOnSelect;
+		
 		protected internal NSDateFormatter fmt = new NSDateFormatter () {
 			DateStyle = NSDateFormatterStyle.Short
 		};
@@ -69,23 +71,24 @@ namespace ClanceysLib
 			PickerType  = PickerTypes.Calendar;
 			DateValue = date;
 			Value = DateValue.ToShortDateString();
-		}	
-				
+		}
+		
 		public CalendarDateTimeElement (string caption, DateTime date, PickerTypes pickerType) : base (caption)
 		{
 			PickerType = pickerType;
 			DateValue = date;
 			Value = DateValue.ToShortDateString();
-		}	
+		}
 		
 		public override UITableViewCell GetCell (UITableView tv)
 		{
+			
 			if (DateValue.Year < 2000)
 				Value = "No Due Date";
 			else
 				Value = FormatDate(DateValue);
 			var cell =  base.GetCell (tv);
-			
+
 			
 			return cell;
 		}
@@ -144,7 +147,7 @@ namespace ClanceysLib
 		
 		public override void Deselected (DialogViewController dvc, UITableView tableView, NSIndexPath path)
 		{
-			//tableView.DeselectRow(path,true);
+			tableView.DeselectRow(path,true);
 			if (datePicker != null) 
 			{
 				this.DateValue = (DateTime)datePicker.Date;
@@ -157,15 +160,15 @@ namespace ClanceysLib
 		
 		public override void Selected (DialogViewController dvc, UITableView tableView, NSIndexPath path)
 		{
+			
 			if (DisableSwitching)
 				ShowDatePicker(dvc,tableView,path);			
 			else if (PickerType == PickerTypes.Calendar)
 				ShowCalendar(dvc,tableView,path);
 			else
 				ShowDatePicker(dvc,tableView,path);
-			
-			
 		}
+		
 		
 		private void ShowCalendar(DialogViewController dvc, UITableView tableView, NSIndexPath path)
 		{
@@ -251,17 +254,17 @@ namespace ClanceysLib
 				
 				// create a toolbar to have two buttons in the right
 				UIToolbar tools = new UIToolbar(new RectangleF(0, 0, 133, 44.01f));
-				//tools.TintColor = dvc.SearchBarTintColor;
+				tools.TintColor = dvc.NavigationController.NavigationBar.TintColor;
 				// create the array to hold the buttons, which then gets added to the toolbar
 				List<UIBarButtonItem> buttons = new List<UIBarButtonItem>(3);
 
 				// create switch button
-				switchButon = new UIBarButtonItem("Switch",UIBarButtonItemStyle.Bordered,delegate{
+				switchButton = new UIBarButtonItem("Switch",UIBarButtonItemStyle.Bordered,delegate{
 					CloseCalendar(dvc,tableView,path);
 					ShowDatePicker(dvc,tableView,path);
 				});
 				
-				buttons.Add(switchButon);
+				buttons.Add(switchButton);
 				
 				// create a spacer
 				UIBarButtonItem spacer = new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace,null,null);
@@ -370,6 +373,8 @@ namespace ClanceysLib
 				doneButton = new UIBarButtonItem("Done",UIBarButtonItemStyle.Done, delegate{
 					SlideDown(dvc,tableView,path);
 				});
+				
+//				doneButton.TintColor = dvc.NavigationController.NavigationBar.TintColor;
 				// create a toolbar to have two buttons in the right
 				
 				if(DisableSwitching)
@@ -377,17 +382,19 @@ namespace ClanceysLib
 				else 
 				{
 					UIToolbar tools = new UIToolbar(new RectangleF(0, 0, 133, 44.01f));
-				//	tools.TintColor = dvc.SearchBarTintColor;
+//					tools.TintColor = dvc.NavigationController.NavigationBar.TintColor;
 				// create the array to hold the buttons, which then gets added to the toolbar
 					List<UIBarButtonItem> buttons = new List<UIBarButtonItem>(3);
 
 				// create switch button
-					switchButon = new UIBarButtonItem("Switch",UIBarButtonItemStyle.Bordered,delegate{
+					switchButton = new UIBarButtonItem("Switch",UIBarButtonItemStyle.Bordered,delegate{
 						SlideDown(dvc,tableView,path);
 						ShowCalendar(dvc,tableView,path);
 					});
-				
-					buttons.Add(switchButon);
+					
+//					switchButton.TintColor = dvc.NavigationController.NavigationBar.TintColor;
+					
+					buttons.Add(switchButton);
 					
 					// create a spacer
 					UIBarButtonItem spacer = new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace,null,null);
@@ -487,6 +494,5 @@ namespace ClanceysLib
 			return picker;
 		}
 	}
-	
 }
 
