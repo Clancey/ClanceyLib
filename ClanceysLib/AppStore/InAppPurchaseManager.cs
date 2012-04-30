@@ -204,24 +204,26 @@ namespace ClanceysLib
 	
 	public static class SKProductExtender
 	{
+		/// <remarks>
+		/// Use Apple's sample code for formatting a SKProduct price
+		/// https://developer.apple.com/library/ios/#DOCUMENTATION/StoreKit/Reference/SKProduct_Reference/Reference/Reference.html#//apple_ref/occ/instp/SKProduct/priceLocale
+		/// Objective-C version:
+		///    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+		///    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+		///    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+		///    [numberFormatter setLocale:product.priceLocale];
+		///    NSString *formattedString = [numberFormatter stringFromNumber:product.price];
+		/// </remarks>
 		public static string LocalizedPrice( this SKProduct product)
 	    {
-	        Console.WriteLine("product.PriceLocale.LocaleIdentifier="+product.PriceLocale.LocaleIdentifier);
-	        // returns en_AU@currency=AUD for me
-	        string localeIdString = product.PriceLocale.LocaleIdentifier;
-	        string locale = localeIdString; // default
-	        string currency = "USD";
-	        if (localeIdString.IndexOf('@') > 0)
-	        {
-	            locale = localeIdString.Substring(0, localeIdString.IndexOf('@'));
-	            currency = localeIdString.Substring(localeIdString.IndexOf('=')+1,3);
-	        }
-	        Console.WriteLine("locale " + locale);
-	        Console.WriteLine("currency " + currency);
-	
-	        Thread.CurrentThread.CurrentCulture=new System.Globalization.CultureInfo(locale.Replace("_","-"));
-	        return ((double)product.Price.FloatValue).ToString("C2");           
+	        Console.WriteLine(" ** product.PriceLocale.LocaleIdentifier="+product.PriceLocale.LocaleIdentifier);
+			var formatter = new NSNumberFormatter ();
+			formatter.FormatterBehavior = NSNumberFormatterBehavior.Version_10_4;   
+			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
+			formatter.Locale = product.PriceLocale;
+            var formattedString = formatter.StringFromNumber(product.Price);
+            Console.WriteLine(" ** formatter.StringFromNumber(product.Price) = " + formattedString);
+			return formattedString;          
 	    }
 	}
 }
-
