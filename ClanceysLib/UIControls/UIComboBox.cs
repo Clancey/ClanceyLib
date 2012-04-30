@@ -61,6 +61,7 @@ namespace ClanceysLib
 				return false;
 			}
 		}
+		
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
@@ -105,7 +106,7 @@ namespace ClanceysLib
 			//parentView.AddSubview(closeView);			
 			parentView.AddSubview(pickerView);
 			var tb = new UITextField(new RectangleF(0,-100,15,25));
-			//closeView.AddSubview(tb);
+			pickerView.AddSubview(tb);
 			tb.BecomeFirstResponder();
 			tb.ResignFirstResponder();
 			tb.RemoveFromSuperview();

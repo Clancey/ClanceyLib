@@ -1,11 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClanceysLib", "ClanceysLib\ClanceysLib.csproj", "{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClanceySamples", "ClanceySamples\ClanceySamples.csproj", "{1CAB7615-CC07-4808-84CA-4A16A497660C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoTouch.Dialog", "..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj", "{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,22 +25,6 @@ Global
 		{1CAB7615-CC07-4808-84CA-4A16A497660C}.Release|iPhone.Build.0 = Release|iPhone
 		{1CAB7615-CC07-4808-84CA-4A16A497660C}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{1CAB7615-CC07-4808-84CA-4A16A497660C}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AdHoc|iPhone.ActiveCfg = AdHoc|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AdHoc|iPhone.Build.0 = AdHoc|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AdHoc|iPhoneSimulator.ActiveCfg = AdHoc|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AdHoc|iPhoneSimulator.Build.0 = AdHoc|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Debug|iPhone.Build.0 = Debug|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Release|iPhone.ActiveCfg = Release|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Release|iPhone.Build.0 = Release|iPhone
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhone.Build.0 = Debug|iPhone
 		{D7BF0006-ABE7-42FC-9D36-CCEAD42CB4DC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator

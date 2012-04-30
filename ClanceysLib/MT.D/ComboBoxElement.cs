@@ -23,7 +23,10 @@ namespace ClanceysLib
 	{
 		NSString key =new NSString( "UIComboBoxElement");
 		protected UIComboBox ComboBox;
-		
+		public ComboBoxElement(string caption,string[] values) : this(caption,values,"")
+		{
+			
+		}
 		public ComboBoxElement (string caption, object[] Items , string DisplayMember) : base (caption,"") 
 		{
 			this.ComboBox = new UIComboBox(RectangleF.Empty);
